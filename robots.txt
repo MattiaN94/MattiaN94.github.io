@@ -1,0 +1,8 @@
+# Public portfolio. Recruiters, readers and well-behaved crawlers are welcome.
+User-agent: *
+Allow: /
+
+Sitemap: https://mattian94.github.io/sitemap.xml
+
+# Human-readable build notes: https://mattian94.github.io/humans.txt
+# AI-facing context and grounding rules: https://mattian94.github.io/llms.txt

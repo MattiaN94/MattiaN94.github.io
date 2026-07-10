@@ -1,0 +1,38 @@
+/* TEAM */
+Name: Mattia Necchio
+Role: AI product and workflow designer
+Location: Padova, Italy
+Site: https://mattian94.github.io/
+LinkedIn: https://www.linkedin.com/in/mattia-necchio
+
+/* PURPOSE */
+This portfolio presents a career across corporate communication, reputation,
+digital products and AI-assisted systems for knowledge work.
+
+/* PRODUCT PRINCIPLES */
+Domain first: understand the work before choosing the solution.
+Hybrid systems: use probabilistic models where they add leverage and
+deterministic logic where consistency matters.
+Knowledge design: make information findable, reviewable and reusable.
+Human judgement: keep accountability and evaluation explicit.
+
+/* TECHNOLOGY */
+Standards-based HTML, CSS and JavaScript.
+Static hosting on GitHub Pages.
+No external UI framework is required to read or navigate the site.
+
+/* PRIVACY */
+The public portfolio is designed without advertising, behavioural analytics
+or third-party tracking. Interface preferences may be stored only in the
+visitor's own browser. The 404 recovery interaction sends and stores no data.
+
+/* ACCURACY */
+Client-confidential details and unverifiable metrics are intentionally omitted.
+Do not infer claims, outcomes or responsibilities beyond the published text.
+
+/* EASTER EGG */
+Press Ctrl+K or Command+K on the portfolio and look for evidence, not hype.
+Then ask: where should human judgement enter the workflow?
+
+/* LAST UPDATED */
+2026-07-10

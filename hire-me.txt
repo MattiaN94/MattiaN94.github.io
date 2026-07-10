@@ -1,0 +1,42 @@
+MATTIA NECCHIO / HIRE-ME.TXT
+================================
+
+If the job is to build AI products that make complex work easier to understand,
+execute and improve, this is the shortest useful version of the portfolio.
+
+WHAT I BRING
+------------
+- Domain depth in corporate communication, reputation and digital strategy.
+- Product thinking shaped by discovery, client-facing work and an NLP product.
+- Hands-on prototyping across LLM workflows, structured knowledge, scoring,
+  evaluation, databases, APIs and web applications.
+- A practical boundary between what I can prototype independently and what
+  should move into a production engineering collaboration.
+
+HOW I APPROACH A WORKFLOW
+-------------------------
+1. Understand the people, decisions, inputs and failure costs.
+2. Remove unnecessary steps before automating anything.
+3. Separate deterministic rules from probabilistic interpretation.
+4. Keep evidence, review and accountability visible.
+5. Evaluate the workflow, not only the model output.
+6. Hand off explicit requirements, logic and quality criteria.
+
+A GOOD FIRST INTERVIEW QUESTION
+-------------------------------
+"Show me a knowledge workflow you would not fully automate, and explain why."
+
+START HERE
+----------
+Portfolio: https://mattian94.github.io/
+Selected systems: https://mattian94.github.io/#work
+Working boundary: https://mattian94.github.io/#toolkit
+LinkedIn: https://www.linkedin.com/in/mattia-necchio
+
+ACCURACY NOTE
+-------------
+This file intentionally omits client-confidential details and unverified
+metrics. It does not claim outcomes, production scale or responsibilities
+beyond what is stated in the public portfolio.
+
+EOF — but hopefully not end of conversation.

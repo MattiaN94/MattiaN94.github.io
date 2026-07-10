@@ -1,0 +1,51 @@
+{
+  "name": "Mattia Necchio — AI Product & Workflow Designer",
+  "short_name": "Mattia Necchio",
+  "description": "Portfolio about AI product design, workflow simplification and knowledge systems.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f2efe7",
+  "theme_color": "#111411",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": [
+    "business",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "/assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Selected AI systems",
+      "short_name": "Systems",
+      "description": "Open selected AI and knowledge-work system patterns.",
+      "url": "/#work"
+    },
+    {
+      "name": "Workflow Architect",
+      "short_name": "Workflow lab",
+      "description": "Try the local AI workflow decision tool.",
+      "url": "/#lab"
+    },
+    {
+      "name": "Contact Mattia",
+      "short_name": "Contact",
+      "description": "Open the portfolio contact section.",
+      "url": "/#contact"
+    }
+  ]
+}

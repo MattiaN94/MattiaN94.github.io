@@ -1,0 +1,20 @@
+{
+  "name": "mattian94.github.io",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mattia Necchio's public portfolio for AI product design, workflow simplification and knowledge systems.",
+  "type": "module",
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "test": "npm run validate"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MattiaN94/MattiaN94.github.io.git"
+  },
+  "homepage": "https://mattian94.github.io/"
+}

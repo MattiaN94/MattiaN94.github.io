@@ -1,0 +1,26 @@
+# Dependencies and package-manager output
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local build and test artifacts
+_site/
+coverage/
+.cache/
+.lighthouseci/
+reports/
+*.log
+*.tmp
+
+# Local environment files
+.env
+.env.*
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini

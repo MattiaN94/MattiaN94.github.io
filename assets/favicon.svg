@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="MN">
+  <rect width="64" height="64" rx="19" fill="#111411"/>
+  <circle cx="50" cy="14" r="5" fill="#b8a6ff"/>
+  <text x="32" y="39" fill="#c9ff4a" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="900" letter-spacing="-2" text-anchor="middle">MN</text>
+</svg>

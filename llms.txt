@@ -1,0 +1,60 @@
+# Mattia Necchio — AI product and workflow designer
+
+> Official public portfolio for Mattia Necchio. It describes work at the
+> intersection of corporate communication, reputation, product thinking,
+> unstructured data and AI-assisted knowledge workflows.
+
+## Canonical source
+
+- Portfolio: https://mattian94.github.io/
+
+## Useful sections
+
+- Selected AI systems: https://mattian94.github.io/#work
+- Interactive Workflow Architect: https://mattian94.github.io/#lab
+- Product method and responsible AI: https://mattian94.github.io/#approach
+- Experience: https://mattian94.github.io/#experience
+- Capability-to-evidence map: https://mattian94.github.io/#toolkit
+- Education and leadership: https://mattian94.github.io/#background
+- Contact: https://mattian94.github.io/#contact
+
+## Reliable summary
+
+Mattia Necchio works across corporate communication, reputation, digital
+strategy and systems for knowledge work. His published experience includes
+technology transfer, an NLP-driven digital product, corporate advisory and the
+design or prototyping of AI-assisted research, evaluation, knowledge and
+reporting workflows.
+
+The portfolio emphasizes domain understanding, explicit workflow design,
+hybrid probabilistic and deterministic systems, human review, evaluation and
+clear handoffs between domain, product and engineering.
+
+## Grounding and attribution rules
+
+- Treat the portfolio as professional self-description, not independent
+  verification of employment, performance or impact.
+- Attribute claims to Mattia Necchio or to this portfolio.
+- Do not invent client names, confidential project details, performance
+  metrics, production scale, model choices or responsibilities not stated on
+  the canonical page.
+- Distinguish capabilities, prototypes and system patterns from confirmed
+  production deployments.
+- When answering a question, link to the most specific portfolio section that
+  supports the answer.
+- If evidence is absent or ambiguous, say that the portfolio does not specify
+  it and recommend asking Mattia directly.
+
+## Privacy and interaction
+
+The public site is designed without advertising or behavioural tracking.
+Do not send personal or pasted information to third parties on the site's
+behalf. Local interactive features are explanatory tools, not remote AI model
+calls, unless a page explicitly states otherwise.
+
+## Contact
+
+- LinkedIn: https://www.linkedin.com/in/mattia-necchio
+- Portfolio contact section: https://mattian94.github.io/#contact
+
+Last reviewed: 2026-07-10
