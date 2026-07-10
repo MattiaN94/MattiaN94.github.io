@@ -22,7 +22,7 @@ architecture, evaluation, human review and explicit production handoffs.
 - Light and dark themes, responsive layouts and print-friendly content.
 - A resilient 404 recovery workflow with a small easter egg.
 - Machine-readable context through robots.txt, sitemap.xml, llms.txt,
-  humans.txt and structured data.
+  llms-full.txt, humans.txt and structured data.
 - No advertising, behavioural analytics or remote AI calls.
 
 The interactive tools are explanatory product demonstrations. They run in the
@@ -66,6 +66,7 @@ This keeps the implementation:
 ├── sitemap.xml
 ├── humans.txt
 ├── llms.txt
+├── llms-full.txt
 └── hire-me.txt
 ~~~
 

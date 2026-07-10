@@ -23,6 +23,7 @@ const requiredFiles = [
   "sitemap.xml",
   "humans.txt",
   "llms.txt",
+  "llms-full.txt",
   "hire-me.txt",
   ".nojekyll",
   ".well-known/security.txt",
@@ -45,6 +46,7 @@ const publicFiles = [
   "sitemap.xml",
   "humans.txt",
   "llms.txt",
+  "llms-full.txt",
   "hire-me.txt",
   ".nojekyll",
   ".well-known/security.txt"
@@ -515,7 +517,7 @@ await runSection("Local links and assets", async () => {
     await checkLocalReference(match[1], "robots.txt", "sitemap");
   }
 
-  for (const relativePath of ["humans.txt", "hire-me.txt", "llms.txt", ".well-known/security.txt"]) {
+  for (const relativePath of ["humans.txt", "hire-me.txt", "llms.txt", "llms-full.txt", ".well-known/security.txt"]) {
     const text = await readText(relativePath);
     const urls = text.match(/https:\/\/mattian94\.github\.io\/[^\s<>"')\]]*/gi) || [];
     for (const url of urls) {

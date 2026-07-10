@@ -688,20 +688,23 @@ kbd {
   text-transform: uppercase;
 }
 
-.type-rule,
-.rule {
+.trace-list .type-rule,
+.layer-row .rule,
+.architecture-legend .rule {
   background: rgba(125, 216, 255, 0.16);
   color: #87ddff;
 }
 
-.type-ai,
-.ai {
+.trace-list .type-ai,
+.layer-row .ai,
+.architecture-legend .ai {
   background: rgba(184, 166, 255, 0.18);
   color: #c7baff;
 }
 
-.type-human,
-.human {
+.trace-list .type-human,
+.layer-row .human,
+.architecture-legend .human {
   background: rgba(201, 255, 74, 0.15);
   color: var(--accent);
 }
@@ -1039,6 +1042,11 @@ kbd {
 [data-theme="dark"] .case-card:not(.case-card-featured) .layer-row .rule { color: #87ddff; }
 [data-theme="dark"] .case-card:not(.case-card-featured) .layer-row .ai { color: #c7baff; }
 [data-theme="dark"] .case-card:not(.case-card-featured) .layer-row .human { color: var(--accent); }
+
+[data-theme="dark"] .brand-mark {
+  background: #111411;
+  color: #c9ff4a;
+}
 
 .case-open {
   position: relative;
@@ -1466,7 +1474,7 @@ input[type="range"] {
 
 .blueprint-step em {
   margin-bottom: 10px;
-  color: #727958;
+  color: #59603e;
   font-family: Consolas, monospace;
   font-size: 8px;
   font-style: normal;
@@ -1578,8 +1586,8 @@ input[type="range"] {
   margin-top: 20px;
   padding: clamp(28px, 5vw, 58px);
   border-radius: var(--radius-lg);
-  background: var(--ink);
-  color: var(--bg);
+  background: #111411;
+  color: #f2efe7;
 }
 
 .principle-panel .kicker {
@@ -1598,7 +1606,7 @@ input[type="range"] {
 .principle-panel ul {
   margin: 0;
   padding: 0;
-  border-top: 1px solid color-mix(in srgb, var(--bg) 18%, transparent);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
   list-style: none;
 }
 
@@ -1607,7 +1615,7 @@ input[type="range"] {
   grid-template-columns: 155px 1fr;
   gap: 20px;
   padding: 19px 0;
-  border-bottom: 1px solid color-mix(in srgb, var(--bg) 18%, transparent);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 .principle-panel strong {
@@ -1616,7 +1624,7 @@ input[type="range"] {
 }
 
 .principle-panel li span {
-  color: color-mix(in srgb, var(--bg) 68%, transparent);
+  color: rgba(255, 255, 255, 0.68);
   font-size: 13px;
 }
 

@@ -44,7 +44,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p _site/assets _site/.well-known
-          cp index.html 404.html sw.js site.webmanifest robots.txt sitemap.xml humans.txt llms.txt hire-me.txt _site/
+          cp index.html 404.html sw.js site.webmanifest robots.txt sitemap.xml humans.txt llms.txt llms-full.txt hire-me.txt _site/
           cp -R assets/. _site/assets/
           cp .nojekyll _site/.nojekyll
           cp .well-known/security.txt _site/.well-known/security.txt

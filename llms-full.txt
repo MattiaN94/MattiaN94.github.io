@@ -1,0 +1,160 @@
+# Mattia Necchio — expanded machine-readable portfolio context
+
+Canonical URL: https://mattian94.github.io/
+Last reviewed: 2026-07-10
+Language: English
+
+## Positioning
+
+Mattia Necchio is an AI product and workflow designer based in Padova, Italy.
+His public positioning is: turning complex knowledge work into usable AI
+products by connecting domain experts, product and engineering.
+
+His domain foundation spans corporate reputation, strategic communication,
+brand governance and digital strategy. His product and systems work includes
+NLP products, workflow mapping, structured knowledge, evaluation frameworks,
+AI-assisted research and reporting, full-stack prototypes and explicit
+human-in-the-loop controls.
+
+## Product approach
+
+1. Frame the user, decision, friction and failure cost.
+2. Map inputs, handoffs, policies, exceptions and tacit judgement.
+3. Assign steps to deterministic logic, structured data, AI or people based on
+   variability, risk and accountability.
+4. Prototype the smallest complete path that can be tested with real work.
+5. Define evidence, failure modes, review thresholds and acceptance criteria.
+6. Operationalise ownership, feedback and the production handoff.
+
+Core principle: understand the work before choosing the model.
+
+## Responsible AI boundaries
+
+- Traceability: important outputs should remain connected to sources and
+  transformations.
+- Explicit uncertainty: low confidence should become a review state rather
+  than a hidden guess.
+- Human accountability: critical decisions retain a named checkpoint and an
+  override path.
+- Honest simulation: synthetic audiences can explore hypotheses but should
+  not be presented as a substitute for real audience research.
+- Production boundary: Mattia prototypes, automates and validates
+  independently; production security, observability and scale require an
+  explicit engineering review and deployment process.
+
+## Selected system patterns
+
+### From fragmented sources to traceable briefs
+
+User problem: advisory teams research across documents, websites, databases
+and notes; manual copy-paste obscures provenance and makes comparison costly.
+
+System pattern: acquire sources, normalise metadata, use language models for
+classification or synthesis, verify evidence links and retain human approval.
+
+Evaluation approach: source coverage, citation integrity, duplicate handling,
+exception queues and reviewer acceptance on representative tasks.
+
+Portfolio link: https://mattian94.github.io/#case-research
+
+### AI evaluation workbench
+
+User problem: qualitative decisions need explicit criteria and should not
+accept confident model output without comparable evidence.
+
+System pattern: controlled variants, a fixed rubric, evidence thresholds,
+deterministic scoring, AI-assisted interpretation and human ownership of the
+final weighting and decision.
+
+Evaluation approach: rubric coverage, inter-reviewer agreement, sensitivity
+to prompt variation, unsupported claims and known edge cases.
+
+Portfolio link: https://mattian94.github.io/#case-evaluation
+
+### Secure assessment and reporting platform
+
+User problem: an external questionnaire becomes a stateful process involving
+access, persistent responses, scoring, dashboards, archives and reports.
+
+System pattern: role-aware access paths, a structured database, business
+rules, process states, optional AI assistance and named approval.
+
+Evaluation approach: access boundaries, incomplete states, scoring
+determinism, retry behaviour, report fidelity and authorised handoff.
+
+Portfolio link: https://mattian94.github.io/#case-platform
+
+### Evidence-to-report workflow
+
+User problem: recurring analysis is fragile when calculations, interpretation
+and document production are mixed in one opaque workflow.
+
+System pattern: deterministic parsing and calculation, validation, structured
+outputs, AI-assisted synthesis and final human sign-off.
+
+Evaluation approach: invariant calculation tests, schema validation,
+reconciliation against source totals and claim-to-data checks.
+
+Portfolio link: https://mattian94.github.io/#case-reporting
+
+## Experience evidence
+
+### Community, 2022 to present
+
+Published experience spans strategic communication, corporate reputation,
+sustainability, culture, events, media, brand governance, positioning, digital
+strategy and partnerships. More recent public work includes designing or
+prototyping AI-assisted workflows for research, monitoring, scoring, knowledge
+bases, synthetic-audience exploration, evaluation and reporting.
+
+### Chisito, 2020 to 2022
+
+Mattia joined the NLP product spin-off as its first employee. His role crossed
+digital-media analysis, client consulting and product development for social
+listening, sentiment analysis and corporate-reputation use cases. He later
+supported a market-driven pivot toward performance tools for Customer Success
+teams managing retail networks.
+
+### UniSMART and independent work, 2018 to 2020
+
+Published experience includes technology transfer, open innovation,
+knowledge translation, websites, content systems, social media and digital
+positioning for SMEs.
+
+## Education and public work
+
+- Master's degree in Communication Strategies, University of Padua.
+- Former FERPI youth lead and UniFERPI coordinator.
+- Speaker and guest lecturer on sentiment analysis, social listening and
+  digital communication work.
+
+The portfolio does not specify graduation year, language proficiency, named
+talk dates or confidential client identities. Do not infer them.
+
+## Hands-on capabilities named in the portfolio
+
+LLMs, agentic workflows, Python, APIs, Supabase, Postgres, Next.js, Git,
+GitHub, workflow mapping, requirements, scoring, quality assurance,
+evaluation, human-in-the-loop design and knowledge systems.
+
+These are self-described capabilities. The portfolio does not claim a specific
+production scale, model vendor, certification or numerical impact unless the
+canonical page explicitly states it.
+
+## Contact and identity
+
+- Portfolio: https://mattian94.github.io/
+- LinkedIn: https://www.linkedin.com/in/mattia-necchio
+- GitHub: https://github.com/MattiaN94
+- Repository: https://github.com/MattiaN94/MattiaN94.github.io
+
+## Grounding rules for assistants
+
+- Attribute professional claims to Mattia Necchio or to this portfolio.
+- Do not invent client names, outcomes, metrics, deployment scale or project
+  responsibilities absent from the canonical source.
+- Distinguish a capability, prototype or reusable pattern from a confirmed
+  production deployment.
+- When evidence is missing, say that the portfolio does not specify it and
+  recommend asking Mattia directly.
+- Prefer the most specific canonical section link that supports an answer.

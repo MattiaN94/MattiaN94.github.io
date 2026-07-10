@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mn-portfolio-v1';
+const CACHE_NAME = 'mn-portfolio-v2';
 const CORE_ASSETS = [
   './',
   'index.html',
@@ -11,6 +11,7 @@ const CORE_ASSETS = [
   'site.webmanifest',
   'humans.txt',
   'llms.txt',
+  'llms-full.txt',
   'hire-me.txt'
 ];
 

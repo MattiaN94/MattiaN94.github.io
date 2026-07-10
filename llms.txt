@@ -6,17 +6,18 @@
 
 ## Canonical source
 
-- Portfolio: https://mattian94.github.io/
+- [Portfolio home](https://mattian94.github.io/): canonical public profile and interactive portfolio.
+- [Expanded machine-readable profile](https://mattian94.github.io/llms-full.txt): detailed factual context and evidence map.
 
 ## Useful sections
 
-- Selected AI systems: https://mattian94.github.io/#work
-- Interactive Workflow Architect: https://mattian94.github.io/#lab
-- Product method and responsible AI: https://mattian94.github.io/#approach
-- Experience: https://mattian94.github.io/#experience
-- Capability-to-evidence map: https://mattian94.github.io/#toolkit
-- Education and leadership: https://mattian94.github.io/#background
-- Contact: https://mattian94.github.io/#contact
+- [Selected AI systems](https://mattian94.github.io/#work): anonymised system patterns and decision logs.
+- [Interactive Workflow Architect](https://mattian94.github.io/#lab): local demonstration of hybrid workflow decisions.
+- [Product method and responsible AI](https://mattian94.github.io/#approach): framing, architecture, evaluation and boundaries.
+- [Experience](https://mattian94.github.io/#experience): career path across communication, NLP product work and AI systems.
+- [Capability-to-evidence map](https://mattian94.github.io/#toolkit): skills linked to supporting portfolio evidence.
+- [Education and leadership](https://mattian94.github.io/#background): university, FERPI, teaching and public work.
+- [Contact](https://mattian94.github.io/#contact): verified public contact routes.
 
 ## Reliable summary
 
