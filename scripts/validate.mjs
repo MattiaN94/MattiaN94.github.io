@@ -751,10 +751,12 @@ await runSection("Repository configuration", async () => {
 
   const pages = await readText(".github/workflows/pages.yml");
   check(pages.includes("actions/configure-pages@v5"), "pages.yml must configure GitHub Pages");
-  check(pages.includes("actions/upload-pages-artifact@v4"), "pages.yml must upload a Pages artifact");
+  check(pages.includes("actions/upload-artifact@v4"), "pages.yml must upload the prepared Pages artifact");
   check(pages.includes("actions/deploy-pages@v4"), "pages.yml must deploy through GitHub Pages");
   check(pages.includes("sw.js"), "pages.yml must stage the service worker");
-  check(pages.includes("include-hidden-files: true"), "pages.yml must include .nojekyll and .well-known");
+  check(pages.includes("artifact.tar") && pages.includes("name: github-pages"), "pages.yml must create the Pages artifact format");
+  check(pages.includes("cp .nojekyll") && pages.includes("cp .well-known/security.txt"), "pages.yml must stage .nojekyll and .well-known/security.txt");
+  check(/--directory\s+_site/.test(pages) && !pages.includes('--exclude=".[^/]*"'), "pages.yml must archive hidden standards files from _site");
   check(pages.includes("npm run validate"), "pages.yml must validate before deployment");
   check(/\bpages:\s*write\b/.test(pages), "pages.yml must grant pages: write");
   check(/\bid-token:\s*write\b/.test(pages), "pages.yml must grant id-token: write");

@@ -49,11 +49,23 @@ jobs:
           cp .nojekyll _site/.nojekyll
           cp .well-known/security.txt _site/.well-known/security.txt
 
+      - name: Archive GitHub Pages artifact
+        shell: bash
+        run: |
+          tar \
+            --dereference \
+            --hard-dereference \
+            --directory _site \
+            -cvf "${RUNNER_TEMP}/artifact.tar" \
+            .
+
       - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-artifact@v4
         with:
-          path: _site
-          include-hidden-files: true
+          name: github-pages
+          path: ${{ runner.temp }}/artifact.tar
+          retention-days: 1
+          if-no-files-found: error
 
   deploy:
     name: Deploy
