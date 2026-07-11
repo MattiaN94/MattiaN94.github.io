@@ -35,4 +35,4 @@ Press Ctrl+K or Command+K on the portfolio and look for evidence, not hype.
 Then ask: where should human judgement enter the workflow?
 
 /* LAST UPDATED */
-2026-07-10
+2026-07-11

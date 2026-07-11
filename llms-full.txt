@@ -1,14 +1,14 @@
 # Mattia Necchio — expanded machine-readable portfolio context
 
 Canonical URL: https://mattian94.github.io/
-Last reviewed: 2026-07-10
+Last reviewed: 2026-07-11
 Language: English
 
 ## Positioning
 
 Mattia Necchio is an AI product and workflow designer based in Padova, Italy.
-His public positioning is: turning complex knowledge work into usable AI
-products by connecting domain experts, product and engineering.
+His public positioning is: designing useful AI products for complex workflows
+by connecting domain experts, product and engineering.
 
 His domain foundation spans corporate reputation, strategic communication,
 brand governance and digital strategy. His product and systems work includes
@@ -46,56 +46,86 @@ Core principle: understand the work before choosing the model.
 
 ### From fragmented sources to traceable briefs
 
-User problem: advisory teams research across documents, websites, databases
-and notes; manual copy-paste obscures provenance and makes comparison costly.
+System pattern: acquire mixed sources, preserve provenance, normalise facts,
+use language models selectively and keep the final brief reviewable.
 
-System pattern: acquire sources, normalise metadata, use language models for
-classification or synthesis, verify evidence links and retain human approval.
-
-Evaluation approach: source coverage, citation integrity, duplicate handling,
-exception queues and reviewer acceptance on representative tasks.
+Useful measures: evidence coverage, unsupported-claim rate, correction time
+and reviewer acceptance with reason-coded edits.
 
 Portfolio link: https://mattian94.github.io/#case-research
 
-### AI evaluation workbench
+### Evidence-first visibility and communication-risk workbench
 
-User problem: qualitative decisions need explicit criteria and should not
-accept confident model output without comparable evidence.
+System pattern: keep observed evidence, inference and uncertainty separate;
+apply stable rubrics and confidence limits before AI-assisted interpretation.
 
-System pattern: controlled variants, a fixed rubric, evidence thresholds,
-deterministic scoring, AI-assisted interpretation and human ownership of the
-final weighting and decision.
+Useful measures: reviewer agreement, ranking stability, unsupported claims,
+override reasons and later calibration against observed outcomes.
 
-Evaluation approach: rubric coverage, inter-reviewer agreement, sensitivity
-to prompt variation, unsupported claims and known edge cases.
+Status boundary: prototype and pre-calibration pattern. Synthetic audiences
+explore hypotheses and do not substitute for real audience research.
 
 Portfolio link: https://mattian94.github.io/#case-evaluation
 
-### Secure assessment and reporting platform
+### Self-service visual production workflow
 
-User problem: an external questionnaire becomes a stateful process involving
-access, persistent responses, scoring, dashboards, archives and reports.
+System pattern: templates, individual or CSV data, visual editing, QR/vCard
+generation and export in a guided self-service product.
 
-System pattern: role-aware access paths, a structured database, business
-rules, process states, optional AI assistance and named approval.
+Useful measures: task completion without help, import recovery, export
+fidelity and reason-coded rework.
 
-Evaluation approach: access boundaries, incomplete states, scoring
-determinism, retry behaviour, report fidelity and authorised handoff.
+Attribution: this work adapts an MIT-licensed open-source base. The claimed
+contribution is adaptation, product and security hardening, configuration and
+deployment readiness, not original authorship of the base.
 
 Portfolio link: https://mattian94.github.io/#case-platform
 
 ### Evidence-to-report workflow
 
-User problem: recurring analysis is fragile when calculations, interpretation
-and document production are mixed in one opaque workflow.
+System pattern: compute metrics in code, validate and reconcile structured
+outputs, then use AI selectively for evidence-bound explanation.
 
-System pattern: deterministic parsing and calculation, validation, structured
-outputs, AI-assisted synthesis and final human sign-off.
-
-Evaluation approach: invariant calculation tests, schema validation,
-reconciliation against source totals and claim-to-data checks.
+Useful measures: reconciliation failures, claim-to-data errors, reviewer
+corrections and time to an approved report.
 
 Portfolio link: https://mattian94.github.io/#case-reporting
+
+### Crisis assessment and decision workspace
+
+System pattern: one workflow across a web questionnaire, protected external
+access, staff dashboard, desktop offline app, structured database, shared
+scoring engine and generated reports.
+
+Useful measures: scoring consistency across surfaces, completion and recovery
+failures, access exceptions, human overrides and export fidelity.
+
+Status boundary: architecture and local builds are described; current
+production deployment and real-world adoption are not claimed.
+
+Portfolio link: https://mattian94.github.io/#case-crisis
+
+### Complex proposal workflow
+
+System pattern: explicit agentic stages for requirements, research, strategy,
+delivery and independent QA, with human decisions and a persistent status log.
+
+Useful measures: requirement coverage, unsupported commitments, reopened-stage
+reasons and QA findings caught before delivery.
+
+Portfolio link: https://mattian94.github.io/#case-tender
+
+### Conversational operations control plane
+
+System pattern: natural-language intent becomes typed, visible and gated tasks
+for analysis, fixes, review, tests, security, release and rollback.
+
+Useful measures: approval latency, retry and failure rate by task, gate
+failures, rollback readiness, recovery time and operator interventions.
+
+Status boundary: production-oriented architecture, not verified in production.
+
+Portfolio link: https://mattian94.github.io/#case-control
 
 ## Experience evidence
 
@@ -133,9 +163,10 @@ talk dates or confidential client identities. Do not infer them.
 
 ## Hands-on capabilities named in the portfolio
 
-LLMs, agentic workflows, Python, APIs, Supabase, Postgres, Next.js, Git,
-GitHub, workflow mapping, requirements, scoring, quality assurance,
-evaluation, human-in-the-loop design and knowledge systems.
+LLMs, agentic workflows, Python, APIs, Supabase, Postgres, Next.js, desktop
+and Tauri patterns, dashboards, task queues, Git, GitHub, workflow mapping,
+requirements, scoring, quality assurance, evaluation, human-in-the-loop
+design and knowledge systems.
 
 These are self-described capabilities. The portfolio does not claim a specific
 production scale, model vendor, certification or numerical impact unless the
