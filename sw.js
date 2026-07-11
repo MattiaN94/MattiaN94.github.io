@@ -1,15 +1,15 @@
-const CACHE_NAME = 'mn-portfolio-v3';
+const CACHE_NAME = 'mn-portfolio-v4';
 const CORE_ASSETS = [
   './',
   'index.html',
   '404.html',
-  'assets/styles.css?v=3',
-  'assets/app.js?v=3',
-  'assets/favicon.svg?v=3',
-  'assets/apple-touch-icon.png?v=3',
-  'assets/icon-192.png?v=3',
-  'assets/icon-512.png?v=3',
-  'site.webmanifest?v=3',
+  'assets/styles.css?v=4',
+  'assets/app.js?v=4',
+  'assets/favicon.svg?v=4',
+  'assets/apple-touch-icon.png?v=4',
+  'assets/icon-192.png?v=4',
+  'assets/icon-512.png?v=4',
+  'site.webmanifest?v=4',
   'humans.txt',
   'llms.txt',
   'llms-full.txt',

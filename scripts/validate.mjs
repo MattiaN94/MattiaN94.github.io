@@ -346,7 +346,7 @@ await runSection("Metadata and canonical URLs", async () => {
   check(Boolean(metaContent(html, "property", "og:title")), "Open Graph title is required");
   check(Boolean(metaContent(html, "property", "og:description")), "Open Graph description is required");
   check(metaContent(html, "property", "og:url") === SITE_URL, "Open Graph URL must equal the canonical URL");
-  check(metaContent(html, "property", "og:image") === SITE_URL + "assets/og-card.png", "Open Graph image must use the canonical absolute URL");
+  check(/^https:\/\/mattian94\.github\.io\/assets\/og-card\.png(?:\?v=\d+)?$/.test(metaContent(html, "property", "og:image")), "Open Graph image must use the canonical absolute URL, optionally with a numeric cache version");
   check(metaContent(html, "property", "og:image:width") === "1200", "Open Graph image width must be 1200");
   check(metaContent(html, "property", "og:image:height") === "630", "Open Graph image height must be 630");
   check(Boolean(metaContent(html, "property", "og:image:alt")), "Open Graph image alt text is required");
@@ -354,7 +354,7 @@ await runSection("Metadata and canonical URLs", async () => {
   check(metaContent(html, "name", "twitter:card") === "summary_large_image", "Twitter card must be summary_large_image");
   check(Boolean(metaContent(html, "name", "twitter:title")), "Twitter title is required");
   check(Boolean(metaContent(html, "name", "twitter:description")), "Twitter description is required");
-  check(metaContent(html, "name", "twitter:image") === SITE_URL + "assets/og-card.png", "Twitter image must use the canonical absolute URL");
+  check(/^https:\/\/mattian94\.github\.io\/assets\/og-card\.png(?:\?v=\d+)?$/.test(metaContent(html, "name", "twitter:image")), "Twitter image must use the canonical absolute URL, optionally with a numeric cache version");
 
   check(/\bnoindex\b/i.test(metaContent(errorHtml, "name", "robots")), "404.html must declare noindex");
   check(documentTitle(errorHtml).length > 0, "404.html must include a title");
@@ -721,6 +721,33 @@ await runSection("Performance budgets", async () => {
     check(/<svg\b/i.test(favicon) && /\bviewBox\s*=/i.test(favicon), "favicon.svg must be a valid scalable SVG");
     check(!/<script\b/i.test(favicon), "favicon.svg must not contain scripts");
   }
+});
+
+await runSection("Palette and case-study guardrails", async () => {
+  const paletteSources = [
+    "index.html",
+    "404.html",
+    "assets/styles.css",
+    "assets/favicon.svg",
+    "scripts/generate_social_assets.py"
+  ];
+  const paletteBundle = (await Promise.all(paletteSources.map(readText))).join("\n");
+  const isGreenDominant = ([red, green, blue]) => green >= 170 && green - red >= 35 && green - blue >= 60;
+  const greenHexValues = [...paletteBundle.matchAll(/#([0-9a-f]{6})\b/gi)]
+    .map((match) => [1, 3, 5].map((offset) => Number.parseInt(match[1].slice(offset - 1, offset + 1), 16)))
+    .filter(isGreenDominant);
+  const greenRgbValues = [...paletteBundle.matchAll(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/gi)]
+    .map((match) => match.slice(1, 4).map(Number))
+    .filter(isGreenDominant);
+  check(greenHexValues.length === 0, "Public palette must not contain green-dominant hex colours");
+  check(greenRgbValues.length === 0, "Public palette must not contain green-dominant RGB colours");
+
+  const html = await readText("index.html");
+  const expectedCaseIds = ["research", "evaluation", "platform", "reporting", "measurement", "orchestration", "control"];
+  const cardIds = [...html.matchAll(/\bid="case-([a-z-]+)"/g)].map((match) => match[1]);
+  const actionIds = [...html.matchAll(/\bdata-case="([a-z-]+)"/g)].map((match) => match[1]);
+  check(JSON.stringify(cardIds) === JSON.stringify(expectedCaseIds), "Public case-card IDs must match the approved generic set");
+  check(JSON.stringify(actionIds) === JSON.stringify(expectedCaseIds), "Public case actions must match the approved generic set");
 });
 
 await runSection("Repository configuration", async () => {

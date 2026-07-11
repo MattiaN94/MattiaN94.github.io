@@ -44,44 +44,44 @@ Core principle: understand the work before choosing the model.
 
 ## Selected system patterns
 
-### From fragmented sources to traceable briefs
+### From fragmented sources to reviewable outputs
 
 System pattern: acquire mixed sources, preserve provenance, normalise facts,
-use language models selectively and keep the final brief reviewable.
+use language models selectively and keep the final output reviewable.
 
 Useful measures: evidence coverage, unsupported-claim rate, correction time
 and reviewer acceptance with reason-coded edits.
 
 Portfolio link: https://mattian94.github.io/#case-research
 
-### Evidence-first visibility and communication-risk workbench
+### Evidence-first evaluation workbench
 
 System pattern: keep observed evidence, inference and uncertainty separate;
 apply stable rubrics and confidence limits before AI-assisted interpretation.
 
-Useful measures: reviewer agreement, ranking stability, unsupported claims,
+Useful measures: reviewer agreement, ordering stability, unsupported claims,
 override reasons and later calibration against observed outcomes.
 
-Status boundary: prototype and pre-calibration pattern. Synthetic audiences
-explore hypotheses and do not substitute for real audience research.
+Status boundary: prototype and pre-calibration pattern. Synthetic scenarios
+explore hypotheses and do not substitute for real research.
 
 Portfolio link: https://mattian94.github.io/#case-evaluation
 
-### Self-service visual production workflow
+### Structured self-service workflow
 
-System pattern: templates, individual or CSV data, visual editing, QR/vCard
-generation and export in a guided self-service product.
+System pattern: templates, individual or batch inputs, guided editing and
+export in a coherent self-service product.
 
 Useful measures: task completion without help, import recovery, export
 fidelity and reason-coded rework.
 
-Attribution: this work adapts an MIT-licensed open-source base. The claimed
+Attribution: this pattern adapts an open-source foundation. The claimed
 contribution is adaptation, product and security hardening, configuration and
-deployment readiness, not original authorship of the base.
+deployment readiness, not original authorship of the foundation.
 
 Portfolio link: https://mattian94.github.io/#case-platform
 
-### Evidence-to-report workflow
+### Validated data-to-output workflow
 
 System pattern: compute metrics in code, validate and reconcile structured
 outputs, then use AI selectively for evidence-bound explanation.
@@ -91,34 +91,34 @@ corrections and time to an approved report.
 
 Portfolio link: https://mattian94.github.io/#case-reporting
 
-### Crisis assessment and decision workspace
+### Multi-surface analysis and measurement system
 
-System pattern: one workflow across a web questionnaire, protected external
-access, staff dashboard, desktop offline app, structured database, shared
-scoring engine and generated reports.
+System pattern: browser and installed-client inputs, operational views,
+structured storage and role-aware outputs share one versioned measurement
+layer and explicit review states.
 
-Useful measures: scoring consistency across surfaces, completion and recovery
-failures, access exceptions, human overrides and export fidelity.
+Useful measures: calculation consistency across surfaces, completion and
+recovery failures, access exceptions, human overrides and output fidelity.
 
 Status boundary: architecture and local builds are described; current
 production deployment and real-world adoption are not claimed.
 
-Portfolio link: https://mattian94.github.io/#case-crisis
+Portfolio link: https://mattian94.github.io/#case-measurement
 
-### Complex proposal workflow
+### Governed multi-stage knowledge workflow
 
-System pattern: explicit agentic stages for requirements, research, strategy,
-delivery and independent QA, with human decisions and a persistent status log.
+System pattern: explicit agentic stages for intake, research, option design,
+production and independent QA, with human decisions and shared state.
 
-Useful measures: requirement coverage, unsupported commitments, reopened-stage
+Useful measures: constraint coverage, unsupported assertions, reopened-stage
 reasons and QA findings caught before delivery.
 
-Portfolio link: https://mattian94.github.io/#case-tender
+Portfolio link: https://mattian94.github.io/#case-orchestration
 
-### Conversational operations control plane
+### Governed operations control plane
 
 System pattern: natural-language intent becomes typed, visible and gated tasks
-for analysis, fixes, review, tests, security, release and rollback.
+for analysis, changes, review, tests, security, release and rollback.
 
 Useful measures: approval latency, retry and failure rate by task, gate
 failures, rollback readiness, recovery time and operator interventions.
