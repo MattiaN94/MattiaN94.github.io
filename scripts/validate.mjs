@@ -339,7 +339,7 @@ await runSection("Metadata and canonical URLs", async () => {
   check(Boolean(metaContent(html, "name", "author")), "Author metadata is required");
   check(/\bindex\b/i.test(robots) && /\bfollow\b/i.test(robots), "Home robots metadata must allow index and follow");
   check(linkHref(html, "canonical") === SITE_URL, "Canonical URL must be exactly " + SITE_URL);
-  check(linkHref(html, "manifest") === "site.webmanifest", "Home must reference site.webmanifest");
+  check(/^site\.webmanifest(?:\?v=\d+)?$/.test(linkHref(html, "manifest") || ""), "Home must reference site.webmanifest, optionally with a numeric cache version");
   check(Boolean(linkHref(html, "icon")), "Home must reference a favicon");
 
   check(metaContent(html, "property", "og:type") === "profile", "Open Graph type must be profile");

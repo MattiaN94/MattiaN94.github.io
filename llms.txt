@@ -11,8 +11,8 @@
 
 ## Useful sections
 
-- [Selected AI systems](https://mattian94.github.io/#work): anonymised system patterns and decision logs.
-- [Interactive Workflow Architect](https://mattian94.github.io/#lab): local demonstration of hybrid workflow decisions.
+- [Selected product systems](https://mattian94.github.io/#work): anonymised system patterns and decision logs.
+- [Interactive Workflow Lab](https://mattian94.github.io/#lab): local demonstration of hybrid workflow decisions and useful measurement signals.
 - [Product method and responsible AI](https://mattian94.github.io/#approach): framing, architecture, evaluation and boundaries.
 - [Experience](https://mattian94.github.io/#experience): career path across communication, NLP product work and AI systems.
 - [Capability-to-evidence map](https://mattian94.github.io/#toolkit): skills linked to supporting portfolio evidence.
@@ -24,8 +24,10 @@
 Mattia Necchio works across corporate communication, reputation, digital
 strategy and systems for knowledge work. His published experience includes
 technology transfer, an NLP-driven digital product, corporate advisory and the
-design or prototyping of AI-assisted research, evaluation, knowledge and
-reporting workflows.
+design or prototyping of monitoring and research synthesis, evidence-first AI
+visibility and communication-risk evaluation, deterministic reporting,
+multi-surface crisis assessment, agentic proposal workflows, AI operations,
+and a self-service visual-production adaptation and hardening case.
 
 The portfolio emphasizes domain understanding, explicit workflow design,
 hybrid probabilistic and deterministic systems, human review, evaluation and
@@ -58,4 +60,4 @@ calls, unless a page explicitly states otherwise.
 - LinkedIn: https://www.linkedin.com/in/mattia-necchio
 - Portfolio contact section: https://mattian94.github.io/#contact
 
-Last reviewed: 2026-07-10
+Last reviewed: 2026-07-11

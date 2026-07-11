@@ -1,14 +1,15 @@
-const CACHE_NAME = 'mn-portfolio-v2';
+const CACHE_NAME = 'mn-portfolio-v3';
 const CORE_ASSETS = [
   './',
   'index.html',
   '404.html',
-  'assets/styles.css',
-  'assets/app.js',
-  'assets/favicon.svg',
-  'assets/icon-192.png',
-  'assets/icon-512.png',
-  'site.webmanifest',
+  'assets/styles.css?v=3',
+  'assets/app.js?v=3',
+  'assets/favicon.svg?v=3',
+  'assets/apple-touch-icon.png?v=3',
+  'assets/icon-192.png?v=3',
+  'assets/icon-512.png?v=3',
+  'site.webmanifest?v=3',
   'humans.txt',
   'llms.txt',
   'llms-full.txt',
@@ -16,7 +17,10 @@ const CORE_ASSETS = [
 ];
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(CORE_ASSETS)));
+  event.waitUntil(Promise.all([
+    self.skipWaiting(),
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(CORE_ASSETS))
+  ]));
 });
 
 self.addEventListener('activate', (event) => {

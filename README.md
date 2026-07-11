@@ -14,12 +14,14 @@ architecture, evaluation, human review and explicit production handoffs.
 
 ## What is inside
 
-- Selected system patterns with transparent decision logs.
-- An on-device Workflow Architect that explains where rules, AI and human
-  judgement belong.
+- Seven anonymised system families with transparent decision logs and honest
+  status boundaries.
+- An on-device Workflow Lab that explains where rules, AI and human judgement
+  belong, plus which outcome signals are useful to measure.
 - A focused 90-second recruiter tour.
 - Keyboard-first evidence search with Ctrl+K or Command+K.
-- Light and dark themes, responsive layouts and print-friendly content.
+- Light and dark themes, reduced-motion support, compact mobile disclosure and
+  print-friendly content.
 - A resilient 404 recovery workflow with a small easter egg.
 - Machine-readable context through robots.txt, sitemap.xml, llms.txt,
   llms-full.txt, humans.txt and structured data.
