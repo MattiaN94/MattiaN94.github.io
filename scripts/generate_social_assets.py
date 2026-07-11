@@ -38,7 +38,7 @@ def draw_icon(size: int, filename: str) -> None:
     dot = round(size * 0.07 * scale)
     draw.ellipse(
         (size * scale - pad - dot * 2, pad, size * scale - pad, pad + dot * 2),
-        fill="#b7f34a",
+        fill="#8e88ff",
     )
     label_font = font("arialbd.ttf", round(size * 0.34 * scale))
     text = "MN"
@@ -103,9 +103,9 @@ def draw_social_card() -> None:
     panel = (790, 40, 1150, 590)
     draw.rounded_rectangle(panel, radius=36, fill="#111318", outline="#343741", width=1)
     draw.text((826, 74), "WORKFLOW.TRACE", font=MONO_14, fill="#8b909a")
-    draw.ellipse((1100, 74, 1112, 86), fill="#b7f34a")
+    draw.ellipse((1100, 74, 1112, 86), fill="#8e88ff")
 
-    draw.text((826, 126), "MESSY INPUTS", font=BOLD_26, fill="#f4f5f1")
+    draw.text((826, 126), "MESSY INPUTS", font=BOLD_26, fill="#f4f5f7")
     draw.text((826, 157), "USABLE OUTPUT", font=BOLD_26, fill="#aaa6ff")
 
     nodes = [
@@ -118,12 +118,12 @@ def draw_social_card() -> None:
     for number, label, kind, colour in nodes:
         draw.rounded_rectangle((820, y, 1120, y + 62), radius=14, fill="#1c1f26", outline="#30343e", width=1)
         draw.text((839, y + 22), number, font=MONO_14, fill="#747a86")
-        draw.text((882, y + 20), label, font=BOLD_18, fill="#f4f5f1")
+        draw.text((882, y + 20), label, font=BOLD_18, fill="#f4f5f7")
         kind_box = draw.textbbox((0, 0), kind, font=MONO_14)
         draw.text((1098 - (kind_box[2] - kind_box[0]), y + 23), kind, font=MONO_14, fill=colour)
         y += 75
 
-    draw.rounded_rectangle((820, 535, 1120, 562), radius=13, fill="#b7f34a")
+    draw.rounded_rectangle((820, 535, 1120, 562), radius=13, fill="#8e88ff")
     output = "USEFUL · REVIEWABLE · MEASURABLE"
     output_box = draw.textbbox((0, 0), output, font=MONO_14)
     draw.text((970 - (output_box[2] - output_box[0]) / 2, 541), output, font=MONO_14, fill="#111318")

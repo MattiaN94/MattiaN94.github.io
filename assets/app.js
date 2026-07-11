@@ -186,17 +186,17 @@
   // Case-study decision logs. All text is static and rendered with textContent.
   const caseData = {
     research: {
-      eyebrow: 'Knowledge workflow · internal system pattern',
-      title: 'From fragmented sources to traceable briefs',
+      eyebrow: 'Knowledge workflow · composite pattern',
+      title: 'From fragmented sources to reviewable outputs',
       summary: [
-        ['User', 'Advisory teams working across heterogeneous sources'],
-        ['Status', 'Reusable internal workflow pattern'],
+        ['User', 'Cross-functional teams working across heterogeneous sources'],
+        ['Status', 'Reusable anonymised composite'],
         ['My contribution', 'Workflow design, orchestration logic, QA and prototype']
       ],
       details: [
-        ['The problem', 'Research begins across documents, websites, databases and notes. Manual copy-paste obscures provenance, makes comparison costly and turns every brief into a one-off effort.'],
+        ['The problem', 'Knowledge work begins across documents, websites, structured sources and notes. Manual copy-paste obscures provenance, makes comparison costly and turns every output into a one-off effort.'],
         ['Before → after', 'Scattered browsing and manual reconciliation become a staged pipeline: acquire, normalise, interpret, verify, review and publish.'],
-        ['Product decision', 'Preserve sources before adding synthesis. A useful brief must let a reviewer inspect the evidence behind each important claim.'],
+        ['Product decision', 'Preserve sources before adding synthesis. A useful output lets a reviewer inspect the evidence behind each important claim.'],
         ['What to measure', 'Evidence coverage on a fixed benchmark set, unsupported-claim rate, time to correct, and reviewer acceptance with reason-coded edits.']
       ],
       layers: [
@@ -207,50 +207,50 @@
       caveat: 'Outcome evidence is described qualitatively because the underlying work and sources are confidential. No throughput or accuracy metric is implied here.'
     },
     evaluation: {
-      eyebrow: 'AI visibility & communication risk · pre-calibration pattern',
-      title: 'Evidence-first visibility & risk workbench',
+      eyebrow: 'Evaluation system · pre-calibration pattern',
+      title: 'Evidence-first evaluation workbench',
       summary: [
-        ['User', 'Teams assessing AI visibility, messages and communication risk'],
+        ['User', 'Teams comparing complex qualitative options and scenarios'],
         ['Status', 'Prototype and pre-calibration workflow pattern'],
         ['My contribution', 'Evidence model, rubric design, agent flow, scoring and review logic']
       ],
       details: [
-        ['The problem', 'Visibility and reputation questions mix observed facts, interpretation and speculation. A polished score can hide weak evidence or mirror the starting hypothesis.'],
+        ['The problem', 'Complex evaluations mix observed facts, interpretation and speculation. A polished score can hide weak evidence or mirror the starting hypothesis.'],
         ['Before → after', 'Ad-hoc judgement becomes an evidence-first flow: capture observations, label inference and uncertainty, apply a stable rubric, compare variants and route sensitive cases to review.'],
-        ['Product decision', 'Evidence comes before score. Cold-start outputs carry confidence limits, and exploratory simulations remain separate from real-world observations.'],
-        ['What to measure', 'Reviewer agreement and disagreement reasons, ranking stability under prompt or order changes, unsupported claims, override reasons and calibration against observed outcomes.']
+        ['Product decision', 'Evidence comes before score. Early outputs carry confidence limits, and exploratory scenarios remain separate from real-world observations.'],
+        ['What to measure', 'Reviewer agreement and disagreement reasons, ordering stability under input changes, unsupported claims, override reasons and calibration against observed outcomes.']
       ],
       layers: [
         ['Deterministic', 'Evidence schemas, observed/inferred/unknown states, scoring ranges, confidence caps and completeness checks.'],
         ['AI', 'Evidence extraction, qualitative lenses, scenario variation, critique and evidence-bound explanation.'],
         ['Human', 'Criteria definition, sensitive-case review, calibration, dispute resolution and the final decision.']
       ],
-      caveat: 'This pre-calibration pattern is not population-validated. Synthetic audiences explore hypotheses; they do not replace real research, and no live ranking is claimed without observed evidence.'
+      caveat: 'This pre-calibration pattern is not population-validated. Synthetic scenarios explore hypotheses; they do not replace real research, and no live performance claim is made without observed evidence.'
     },
     platform: {
-      eyebrow: 'Self-service UX · adaptation and hardening',
-      title: 'Self-service visual production workflow',
+      eyebrow: 'Self-service product · adaptation and hardening',
+      title: 'Structured self-service workflow',
       summary: [
-        ['User', 'Non-technical teams producing recurring branded assets'],
+        ['User', 'Non-technical teams producing recurring structured outputs'],
         ['Status', 'Adaptation and product-hardening pattern'],
         ['My contribution', 'UX simplification, configuration, bulk-data flow, security and deploy readiness']
       ],
       details: [
-        ['The problem', 'Small visual changes and team-wide updates often bounce between spreadsheets, designers and administrators, creating rework and inconsistent outputs.'],
-        ['Before → after', 'A template, individual or CSV data, visual editing, QR/vCard generation and export become one guided self-service flow.'],
-        ['Product decision', 'Automate repeatable placement and validation while keeping the final visual adjustment with the user. Guest and authenticated paths share the same clear mental model.'],
-        ['What to measure', 'Task completion without help, import error and recovery rate, export fidelity, time to a usable asset and reason-coded rework.']
+        ['The problem', 'Small changes and team-wide updates often bounce between data sources, specialists and administrators, creating rework and inconsistent outputs.'],
+        ['Before → after', 'Templates, individual or batch inputs, guided editing and export become one coherent self-service flow.'],
+        ['Product decision', 'Automate repeatable placement and validation while keeping meaningful adjustments with the user. Different access paths share the same clear mental model.'],
+        ['What to measure', 'Task completion without help, import error and recovery rate, output fidelity, time to a usable result and reason-coded rework.']
       ],
       layers: [
-        ['Deterministic', 'CSV validation, field mapping, authentication, private storage, row-level policies and export rules.'],
-        ['Automation', 'Template population, bulk generation, QR/vCard assembly and reusable layout behaviour.'],
-        ['Human', 'Template choice, visual adjustment, exception handling and approval of the final asset.']
+        ['Deterministic', 'Input validation, field mapping, access policies, private storage and export rules.'],
+        ['Automation', 'Template population, batch generation and reusable layout behaviour.'],
+        ['Human', 'Template choice, guided adjustment, exception handling and approval of the final output.']
       ],
-      caveat: 'This work adapts an MIT-licensed open-source base. The contribution described here is product adaptation, UX and security hardening, configuration and deployment readiness — not original authorship of the base product.'
+      caveat: 'This pattern includes adaptation of an open-source foundation. The contribution described here is product adaptation, UX and security hardening, configuration and deployment readiness — not original authorship of the foundation.'
     },
     reporting: {
-      eyebrow: 'Analytics automation · reusable pipeline',
-      title: 'Evidence-to-report workflow',
+      eyebrow: 'Analysis automation · reusable pipeline',
+      title: 'Validated data-to-output workflow',
       summary: [
         ['User', 'Analysts producing recurring business outputs'],
         ['Status', 'Structured analysis and reporting pattern'],
@@ -267,53 +267,53 @@
         ['AI', 'Categorisation, synthesis and explanation where the result can be traced to validated data.'],
         ['Human', 'Business interpretation, outlier review, narrative judgement and approval of the delivered report.']
       ],
-      caveat: 'No performance claim is made without measured project data. The case documents the architecture and quality boundary rather than an invented ROI.'
+      caveat: 'No ROI is stated without measured project data. The case documents the architecture and quality boundary instead.'
     },
-    crisis: {
-      eyebrow: 'Crisis readiness · anonymised multi-surface pattern',
-      title: 'Crisis assessment & decision workspace',
+    measurement: {
+      eyebrow: 'Analysis & measurement · anonymised multi-surface pattern',
+      title: 'Multi-surface analysis & measurement system',
       summary: [
-        ['User', 'Communication teams, audit participants and decision owners'],
-        ['Surfaces', 'Web questionnaire, staff dashboard, desktop app, database and reports'],
-        ['My contribution', 'Workflow mapping, UX, data model, scoring logic, prototype and evaluation']
+        ['User', 'Analysts, contributors and authorised reviewers'],
+        ['Surfaces', 'Browser and installed-client inputs, operational views, structured storage and role-aware outputs'],
+        ['My contribution', 'Workflow mapping, UX, data model, measurement logic, prototype and evaluation']
       ],
       details: [
-        ['The problem', 'A distributed assessment quickly becomes a stateful product: secure access, online and offline input, shared scoring, status, evidence, review and useful outputs.'],
-        ['Before → after', 'Web and tokenised questionnaires plus a desktop offline flow feed one structured database. A staff dashboard tracks progress and scores; shared logic produces reviewable exports.'],
-        ['Product decision', 'One scoring engine serves every surface. The process instance — not a generated summary — is the source of truth, and privileged actions stay server-side.'],
-        ['What to measure', 'Scoring consistency across surfaces, completion and recovery rates, access exceptions, time to verified review, human overrides and export fidelity.']
+        ['The problem', 'Distributed analysis becomes a stateful product once access, multiple input paths, shared calculations, status, evidence, review and useful outputs need to stay aligned.'],
+        ['Before → after', 'Disconnected inputs and separately calculated outputs become one coordinated flow backed by a structured model, shared rules and explicit review states.'],
+        ['Product decision', 'One versioned calculation and validation layer serves every surface. The analysis record — not a generated summary — is the source of truth, and privileged actions stay protected.'],
+        ['What to measure', 'Calculation consistency across surfaces, completion and recovery rates, access exceptions, time to reviewed output, human overrides and output fidelity.']
       ],
       layers: [
-        ['Deterministic', 'Access, database constraints, process states, shared scoring, routing, audit trails and report assembly.'],
+        ['Deterministic', 'Access, data constraints, process states, shared measurement rules, routing, audit trails and output assembly.'],
         ['AI', 'Optional evidence-bound synthesis and explanation after structured processing; never an autonomous final response.'],
-        ['Human', 'Assessment, exception resolution, severity or score review, recommendation and final approval.']
+        ['Human', 'Interpretation, exception resolution, measurement review, recommendation and final approval.']
       ],
-      caveat: 'This case reflects architecture and local build work; current production deployment and real-world adoption are not claimed. Production security and scale still require formal engineering review.'
+      caveat: 'This anonymised composite reflects architecture and local build work; production deployment and real-world adoption are not claimed. Production security and scale still require formal engineering review.'
     },
-    tender: {
-      eyebrow: 'Agentic workflow · governed workspace pattern',
-      title: 'Complex proposal workflow',
+    orchestration: {
+      eyebrow: 'Agentic orchestration · governed composite pattern',
+      title: 'Governed multi-stage knowledge workflow',
       summary: [
-        ['User', 'Teams responding to complex briefs and tenders'],
+        ['User', 'Teams delivering complex, evidence-heavy outputs'],
         ['Status', 'Multi-stage agentic workflow pattern'],
         ['My contribution', 'Workflow architecture, stage contracts, decision log and QA boundaries']
       ],
       details: [
-        ['The problem', 'Long briefs create missed requirements, generic reuse and repeated questions. Research, strategy and delivery often drift apart before final QA.'],
-        ['Before → after', 'Requirements analysis, contextual research, strategic alternatives, operating model and independent QA run as explicit stages that can reopen when evidence changes.'],
-        ['Product decision', 'Ask only questions that change the route. Facts, evidence, interpretations and assumptions remain distinct, while a status file keeps the next action obvious.'],
-        ['What to measure', 'Requirement coverage, unsupported commitments, reopened-stage reasons, high-impact questions per phase and QA findings caught before delivery.']
+        ['The problem', 'Large knowledge tasks create missed constraints, generic reuse and repeated questions. Intake, research, option design and production often drift apart before final review.'],
+        ['Before → after', 'Intake, contextual research, alternative design, production and independent QA run as explicit stages that can reopen when evidence changes.'],
+        ['Product decision', 'Ask only questions that change the route. Facts, evidence, interpretations and assumptions remain distinct, while a shared state keeps the next action obvious.'],
+        ['What to measure', 'Constraint coverage, unsupported assertions, reopened-stage reasons, high-impact questions per phase and QA findings caught before delivery.']
       ],
       layers: [
         ['Deterministic', 'Stage contracts, required artefacts, status transitions, source registers and completion gates.'],
-        ['AI', 'Specialist analysis, research synthesis, option generation, drafting and independent challenge.'],
-        ['Human', 'Strategic choices, commercial commitments, assumptions, approvals and final accountability.']
+        ['AI', 'Specialist analysis, research synthesis, option generation, production support and independent challenge.'],
+        ['Human', 'Strategic choices, material commitments, assumptions, approvals and final accountability.']
       ],
-      caveat: 'This is a workflow and prompt-governance pattern, not a claim of autonomous delivery. Evidence and client commitments always require human verification.'
+      caveat: 'This is a workflow and prompt-governance pattern, not a claim of autonomous delivery. Evidence and material commitments always require human verification.'
     },
     control: {
-      eyebrow: 'AI operations · production-oriented pattern',
-      title: 'Conversational operations control plane',
+      eyebrow: 'AI-assisted operations · production-oriented pattern',
+      title: 'Governed operations control plane',
       summary: [
         ['User', 'Operators managing multiple software products and releases'],
         ['Status', 'Production-oriented architecture, not claimed as live production'],
@@ -321,20 +321,20 @@
       ],
       details: [
         ['The problem', 'AI-assisted maintenance becomes unsafe when intent, code changes, tests, deployment state and rollback live in disconnected tools or opaque agents.'],
-        ['Before → after', 'A conversational request becomes an event and a visible task timeline across specialised workers for analysis, fixes, review, tests, security and release.'],
+        ['Before → after', 'A conversational request becomes an event and a visible task timeline across specialised workers for analysis, changes, review, tests, security and release.'],
         ['Product decision', 'Preview is the default. Risky actions need approval, direct commits to the main branch are blocked, and every release keeps a pause and rollback path.'],
         ['What to measure', 'Approval latency, failed or retried tasks by type, test and security gate failures, rollback readiness, recovery time and operator interventions.']
       ],
       layers: [
         ['Deterministic', 'Typed events, queues, allowlists, isolated workspaces, idempotency, audit logs and release gates.'],
-        ['AI', 'Intent interpretation and specialised workers for analysis, implementation, review and remediation proposals.'],
+        ['AI', 'Intent interpretation and specialised workers for analysis, implementation, review and remediation plans.'],
         ['Human', 'Approval of risky actions, exception handling, release control and rollback decisions.']
       ],
       caveat: 'The architecture is production-oriented, not verified in production. RBAC, stronger isolation, observability and dead-letter handling remain explicit hardening work.'
     }
   };
 
-  const caseOrder = ['research', 'evaluation', 'platform', 'reporting', 'crisis', 'tender', 'control'];
+  const caseOrder = ['research', 'evaluation', 'platform', 'reporting', 'measurement', 'orchestration', 'control'];
   const caseDialog = document.getElementById('caseDialog');
   const caseDialogTitle = document.getElementById('caseDialogTitle');
   const caseDialogEyebrow = document.getElementById('caseDialogEyebrow');
@@ -410,7 +410,7 @@
   copyCaseLink?.addEventListener('click', () => copyText(`${window.location.origin}${window.location.pathname}#case-${activeCase}`, 'Case link copied'));
 
   const handleCaseHash = () => {
-    const match = window.location.hash.match(/^#case-(research|evaluation|platform|reporting|crisis|tender|control)$/);
+    const match = window.location.hash.match(/^#case-(research|evaluation|platform|reporting|measurement|orchestration|control)$/);
     if (match) openCase(match[1], null, false);
   };
   window.addEventListener('hashchange', handleCaseHash);
@@ -532,17 +532,17 @@
       logic: 'Rules protect required information and ownership. AI helps interpret messy requests; a named owner confirms the next action.',
       gates: ['Correct routing and time to first useful action', 'Rework and escalation precision', 'Owner corrections by failure type']
     },
-    crisis: {
-      before: 'Collect inputs → reconcile versions → score separately → chase status → assemble reports',
+    measurement: {
+      before: 'Collect inputs → reconcile versions → calculate separately → chase status → assemble outputs',
       steps: [
-        ['Capture', 'Accept web and offline inputs', 'rule'],
-        ['Structure', 'Store one process record', 'rule'],
+        ['Capture', 'Accept distributed inputs', 'rule'],
+        ['Structure', 'Create one analysis record', 'rule'],
         ['Assist', 'Summarise evidence and gaps', 'ai'],
-        ['Reconcile', 'Apply one shared scoring engine', 'rule'],
+        ['Reconcile', 'Apply one shared measurement layer', 'rule'],
         ['Approve', 'Review exceptions and publish', 'human']
       ],
-      logic: 'One process record and one scoring engine serve every surface. AI can explain evidence; people own exceptions and recommendations.',
-      gates: ['Cross-surface scoring consistency', 'Completion, sync and recovery failures', 'Human overrides and time to verified review']
+      logic: 'One analysis record and one shared measurement layer serve every surface. AI can explain evidence; people own exceptions and recommendations.',
+      gates: ['Cross-surface calculation consistency', 'Completion and recovery failures', 'Human overrides and time to reviewed output']
     }
   };
 
@@ -668,14 +668,14 @@
     { icon: 'AI', title: 'Try the Workflow Lab', detail: 'A transparent local rules engine', keywords: 'workflow mapping simplify automation LLM AI rules', action: () => scrollTo('#lab') },
     { icon: '01', title: 'Human judgement and review', detail: 'Responsible-by-design product method', keywords: 'human review human-in-the-loop accountability safety uncertainty', action: () => scrollTo('#approach') },
     { icon: '02', title: 'Product discovery evidence', detail: 'First employee at an NLP spin-off; market-led pivot', keywords: 'product discovery market users Chisito pivot NLP', action: () => scrollTo('#experience') },
-    { icon: '03', title: 'AI visibility and risk evidence', detail: 'Evidence-first scoring, uncertainty and review', keywords: 'evaluation evals QA GEO visibility reputation synthetic audiences scoring rubric uncertainty', action: () => openCaseFromCommand('evaluation') },
-    { icon: '04', title: 'Multi-surface product evidence', detail: 'Web, desktop, dashboard, database, scoring and reports', keywords: 'full-stack prototype multi-surface crisis desktop Tauri dashboard database Next.js Supabase Postgres APIs web app', action: () => openCaseFromCommand('crisis') },
+    { icon: '03', title: 'Evaluation-system evidence', detail: 'Evidence-first scoring, uncertainty and review', keywords: 'evaluation evals QA evidence scoring rubric uncertainty', action: () => openCaseFromCommand('evaluation') },
+    { icon: '04', title: 'Multi-surface analysis evidence', detail: 'Input surfaces, data model, measurement logic and review', keywords: 'full-stack prototype multi-surface analysis measurement data model interfaces review APIs Next.js Supabase Postgres desktop Tauri', action: () => openCaseFromCommand('measurement') },
     { icon: '05', title: 'Corporate reputation & strategy', detail: 'Domain foundation in high-context advisory work', keywords: 'corporate reputation brand governance digital strategy communication', action: () => scrollTo('#experience') },
-    { icon: '06', title: 'Knowledge systems evidence', detail: 'From sources to traceable briefs', keywords: 'knowledge systems research sources evidence LLMs Python', action: () => openCaseFromCommand('research') },
+    { icon: '06', title: 'Knowledge systems evidence', detail: 'From sources to reviewable outputs', keywords: 'knowledge systems research sources evidence LLMs Python', action: () => openCaseFromCommand('research') },
     { icon: '07', title: 'Deterministic reporting evidence', detail: 'Metrics computed in code before AI explanation', keywords: 'reporting metrics KPI calculations Python PowerPoint spreadsheet reconciliation', action: () => openCaseFromCommand('reporting') },
-    { icon: '08', title: 'Agentic workflow evidence', detail: 'Stage gates, specialist agents and independent QA', keywords: 'agentic workflow agents tender proposal requirements research QA decision log', action: () => openCaseFromCommand('tender') },
-    { icon: '09', title: 'AI operations evidence', detail: 'Preview, approval, test, release and rollback', keywords: 'AI operations control plane queues workers GitHub Cloudflare release rollback security', action: () => openCaseFromCommand('control') },
-    { icon: 'UX', title: 'Self-service UX evidence', detail: 'Templates, bulk import, visual editing and export', keywords: 'self-service product UX CSV Supabase visual editor hardening deployment', action: () => openCaseFromCommand('platform') },
+    { icon: '08', title: 'Agentic orchestration evidence', detail: 'Stage gates, specialist agents and independent QA', keywords: 'agentic orchestration workflow agents research QA decision log', action: () => openCaseFromCommand('orchestration') },
+    { icon: '09', title: 'AI operations evidence', detail: 'Preview, approval, test, release and rollback', keywords: 'AI operations control plane queues workers Git GitHub release rollback security', action: () => openCaseFromCommand('control') },
+    { icon: 'UX', title: 'Self-service UX evidence', detail: 'Templates, structured import, guided editing and export', keywords: 'self-service product UX structured import editor hardening deployment', action: () => openCaseFromCommand('platform') },
     { icon: '☼', title: 'Toggle colour theme', detail: 'Light / dark', keywords: 'theme dark light appearance', action: () => { themeToggle?.click(); closeDialog(commandDialog); } },
     { icon: '↓', title: 'Print or save as PDF', detail: 'Recruiter-friendly print layout', keywords: 'download CV resume PDF print', action: () => { closeDialog(commandDialog); window.print(); } },
     { icon: '</>', title: 'Inspect this system', detail: 'Architecture, privacy and local performance', keywords: 'inspect technical architecture performance privacy easter egg simplify', action: () => { closeDialog(commandDialog); openInspect(document.getElementById('commandTrigger')); } }

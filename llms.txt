@@ -25,9 +25,9 @@ Mattia Necchio works across corporate communication, reputation, digital
 strategy and systems for knowledge work. His published experience includes
 technology transfer, an NLP-driven digital product, corporate advisory and the
 design or prototyping of monitoring and research synthesis, evidence-first AI
-visibility and communication-risk evaluation, deterministic reporting,
-multi-surface crisis assessment, agentic proposal workflows, AI operations,
-and a self-service visual-production adaptation and hardening case.
+evaluation, deterministic reporting, multi-surface analysis and measurement,
+governed agentic orchestration, AI operations, and self-service production
+workflows.
 
 The portfolio emphasizes domain understanding, explicit workflow design,
 hybrid probabilistic and deterministic systems, human review, evaluation and
