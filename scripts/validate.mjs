@@ -3,6 +3,7 @@
 import { readFile, readdir, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import vm from "node:vm";
 
 const ROOT = fileURLToPath(new URL("../", import.meta.url));
 const SITE_URL = "https://mattian94.github.io/";
@@ -10,8 +11,10 @@ const SITE = new URL(SITE_URL);
 
 const requiredFiles = [
   "index.html",
+  "it/index.html",
   "404.html",
   "assets/styles.css",
+  "assets/i18n.js",
   "assets/app.js",
   "assets/favicon.svg",
   "assets/og-card.png",
@@ -19,6 +22,7 @@ const requiredFiles = [
   "assets/icon-512.png",
   "sw.js",
   "site.webmanifest",
+  "site-it.webmanifest",
   "robots.txt",
   "sitemap.xml",
   "humans.txt",
@@ -32,16 +36,19 @@ const requiredFiles = [
   "SECURITY.md",
   "package.json",
   "scripts/validate.mjs",
+  "scripts/generate-localized-page.mjs",
   ".github/workflows/quality.yml",
   ".github/workflows/pages.yml"
 ];
 
 const publicFiles = [
   "index.html",
+  "it",
   "404.html",
   "assets",
   "sw.js",
   "site.webmanifest",
+  "site-it.webmanifest",
   "robots.txt",
   "sitemap.xml",
   "humans.txt",
@@ -159,6 +166,16 @@ function linkHref(html, relValue) {
   for (const tag of tags(html, "link")) {
     const rel = (attribute(tag, "rel") || "").toLowerCase().split(/\s+/);
     if (rel.includes(relValue.toLowerCase())) {
+      return decodeHtml(attribute(tag, "href") || "");
+    }
+  }
+  return "";
+}
+
+function alternateHref(html, language) {
+  for (const tag of tags(html, "link")) {
+    const rel = (attribute(tag, "rel") || "").toLowerCase().split(/\s+/);
+    if (rel.includes("alternate") && (attribute(tag, "hreflang") || "").toLowerCase() === language.toLowerCase()) {
       return decodeHtml(attribute(tag, "href") || "");
     }
   }
@@ -303,6 +320,51 @@ function collectJsonObjects(value, output = []) {
   return output;
 }
 
+function extractAssignedLiteral(source, assignmentPrefix, openingCharacter, closingCharacter) {
+  const assignment = source.indexOf(assignmentPrefix);
+  if (assignment < 0) return null;
+  const start = source.indexOf(openingCharacter, assignment + assignmentPrefix.length);
+  if (start < 0) return null;
+  let depth = 0;
+  let quote = null;
+  let escaped = false;
+  for (let index = start; index < source.length; index += 1) {
+    const character = source[index];
+    if (quote) {
+      if (escaped) escaped = false;
+      else if (character === "\\") escaped = true;
+      else if (character === quote) quote = null;
+      continue;
+    }
+    if (["'", '"', "`"].includes(character)) {
+      quote = character;
+      continue;
+    }
+    if (character === openingCharacter) depth += 1;
+    if (character === closingCharacter) {
+      depth -= 1;
+      if (depth === 0) return source.slice(start, index + 1);
+    }
+  }
+  return null;
+}
+
+function evaluateLiteral(source, label) {
+  try {
+    return vm.runInNewContext("(" + source + ")", Object.create(null), { timeout: 1000 });
+  } catch (error) {
+    check(false, "Could not parse " + label + ": " + error.message);
+    return null;
+  }
+}
+
+function collectStrings(value, output = []) {
+  if (typeof value === "string") output.push(value);
+  else if (Array.isArray(value)) value.forEach((item) => collectStrings(item, output));
+  else if (value && typeof value === "object") Object.values(value).forEach((item) => collectStrings(item, output));
+  return output;
+}
+
 function hasType(entity, type) {
   const value = entity && entity["@type"];
   return Array.isArray(value) ? value.includes(type) : value === type;
@@ -325,6 +387,7 @@ await runSection("Required files", async () => {
 
 await runSection("Metadata and canonical URLs", async () => {
   const html = await readText("index.html");
+  const italianHtml = await readText("it/index.html");
   const errorHtml = await readText("404.html");
   const title = documentTitle(html);
   const description = metaContent(html, "name", "description");
@@ -339,8 +402,25 @@ await runSection("Metadata and canonical URLs", async () => {
   check(Boolean(metaContent(html, "name", "author")), "Author metadata is required");
   check(/\bindex\b/i.test(robots) && /\bfollow\b/i.test(robots), "Home robots metadata must allow index and follow");
   check(linkHref(html, "canonical") === SITE_URL, "Canonical URL must be exactly " + SITE_URL);
+  check(alternateHref(html, "en") === SITE_URL, "English hreflang must self-reference the canonical URL");
+  check(alternateHref(html, "it") === SITE_URL + "it/", "Italian hreflang must reference the localized URL");
+  check(alternateHref(html, "x-default") === SITE_URL, "x-default hreflang must reference the English fallback");
   check(/^site\.webmanifest(?:\?v=\d+)?$/.test(linkHref(html, "manifest") || ""), "Home must reference site.webmanifest, optionally with a numeric cache version");
   check(Boolean(linkHref(html, "icon")), "Home must reference a favicon");
+
+  const italianTitle = documentTitle(italianHtml);
+  const italianDescription = metaContent(italianHtml, "name", "description");
+  check(/<html\b[^>]*\blang\s*=\s*["']it["']/i.test(italianHtml), "Italian page must declare lang=\"it\"");
+  check(linkHref(italianHtml, "canonical") === SITE_URL + "it/", "Italian canonical URL must self-reference /it/");
+  check(alternateHref(italianHtml, "en") === SITE_URL, "Italian page must link back to the English alternate");
+  check(alternateHref(italianHtml, "it") === SITE_URL + "it/", "Italian hreflang must self-reference /it/");
+  check(alternateHref(italianHtml, "x-default") === SITE_URL, "Italian x-default must reference the English fallback");
+  check(/^\/site-it\.webmanifest(?:\?v=\d+)?$/.test(linkHref(italianHtml, "manifest") || ""), "Italian page must reference site-it.webmanifest");
+  check(italianTitle.length >= 30 && italianTitle.length <= 60, "Italian title must be between 30 and 60 characters; found " + italianTitle.length);
+  check(italianDescription.length >= 120 && italianDescription.length <= 170, "Italian description must be between 120 and 170 characters; found " + italianDescription.length);
+  check(metaContent(italianHtml, "property", "og:locale") === "it_IT", "Italian Open Graph locale must be it_IT");
+  check(metaContent(italianHtml, "property", "og:url") === SITE_URL + "it/", "Italian Open Graph URL must equal its canonical URL");
+  check(Boolean(metaContent(italianHtml, "property", "og:image:alt")), "Italian Open Graph image alt text is required");
 
   check(metaContent(html, "property", "og:type") === "profile", "Open Graph type must be profile");
   check(Boolean(metaContent(html, "property", "og:title")), "Open Graph title is required");
@@ -366,6 +446,13 @@ await runSection("Metadata and canonical URLs", async () => {
   check(manifest.lang === "en", "Manifest language must be en");
   check(Array.isArray(manifest.icons) && manifest.icons.length >= 2, "Manifest must include 192px and 512px icons");
 
+  const italianManifest = JSON.parse(await readText("site-it.webmanifest"));
+  check(italianManifest.id === "/", "Both language manifests must identify the same PWA");
+  check(italianManifest.start_url === "/it/", "Italian manifest start_url must open /it/");
+  check(italianManifest.scope === "/", "Italian manifest scope must be /");
+  check(italianManifest.lang === "it", "Italian manifest language must be it");
+  check(Array.isArray(italianManifest.icons) && italianManifest.icons.length >= 2, "Italian manifest must include 192px and 512px icons");
+
   const robotsText = await readText("robots.txt");
   check(
     robotsText.includes("Sitemap: " + SITE_URL + "sitemap.xml"),
@@ -374,7 +461,7 @@ await runSection("Metadata and canonical URLs", async () => {
 
   const sitemap = await readText("sitemap.xml");
   const locations = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/gi)].map((match) => match[1].trim());
-  check(locations.length > 0, "sitemap.xml must include at least one URL");
+  check(JSON.stringify(locations) === JSON.stringify([SITE_URL, SITE_URL + "it/"]), "sitemap.xml must include exactly the English and Italian canonical URLs");
   for (const location of locations) {
     check(location.startsWith(SITE_URL), "Sitemap URL must use the canonical origin: " + location);
   }
@@ -432,10 +519,27 @@ await runSection("Structured data", async () => {
       "Person sameAs must include LinkedIn and GitHub"
     );
   }
+
+  const italianBlocks = jsonLdBlocks(await readText("it/index.html"));
+  const italianDocuments = [];
+  for (const block of italianBlocks) {
+    try {
+      italianDocuments.push(JSON.parse(block));
+      check(true, "Italian JSON-LD parsed");
+    } catch (error) {
+      check(false, "Italian JSON-LD is not valid JSON: " + error.message);
+    }
+  }
+  const italianEntities = italianDocuments.flatMap((document) => collectJsonObjects(document));
+  for (const type of ["WebSite", "ProfilePage", "Person"]) {
+    check(italianEntities.some((entity) => hasType(entity, type)), "Italian JSON-LD must include a " + type + " entity");
+  }
+  const italianProfile = italianEntities.find((entity) => hasType(entity, "ProfilePage"));
+  if (italianProfile) check(italianProfile.url === SITE_URL + "it/", "Italian ProfilePage URL must equal its canonical URL");
 });
 
 await runSection("Local links and assets", async () => {
-  for (const relativePath of ["index.html", "404.html"]) {
+  for (const relativePath of ["index.html", "it/index.html", "404.html"]) {
     const html = await readText(relativePath);
     const referenceAttributes = [
       ["a", "href", "link"],
@@ -482,8 +586,8 @@ await runSection("Local links and assets", async () => {
     const serviceWorker = await readText("sw.js");
     const appScript = await readText("assets/app.js");
     check(
-      /navigator\.serviceWorker\.register\(\s*["']sw\.js["']\s*\)/.test(appScript),
-      "assets/app.js must register sw.js"
+      /navigator\.serviceWorker\.register\(\s*["']\/sw\.js["']\s*\)/.test(appScript),
+      "assets/app.js must register /sw.js from every locale route"
     );
     const assetList = serviceWorker.match(/\bCORE_ASSETS\s*=\s*\[([\s\S]*?)\]/);
     check(Boolean(assetList), "sw.js must declare a CORE_ASSETS array");
@@ -496,15 +600,17 @@ await runSection("Local links and assets", async () => {
     }
   }
 
-  const manifest = JSON.parse(await readText("site.webmanifest"));
-  for (const icon of manifest.icons || []) {
-    await checkLocalReference(icon.src, "site.webmanifest", "manifest icon");
-  }
-  for (const shortcut of manifest.shortcuts || []) {
-    await checkLocalReference(shortcut.url, "site.webmanifest", "manifest shortcut");
-  }
-  for (const key of ["id", "start_url", "scope"]) {
-    await checkLocalReference(manifest[key], "site.webmanifest", "manifest URL");
+  for (const manifestPath of ["site.webmanifest", "site-it.webmanifest"]) {
+    const manifest = JSON.parse(await readText(manifestPath));
+    for (const icon of manifest.icons || []) {
+      await checkLocalReference(icon.src, manifestPath, "manifest icon");
+    }
+    for (const shortcut of manifest.shortcuts || []) {
+      await checkLocalReference(shortcut.url, manifestPath, "manifest shortcut");
+    }
+    for (const key of ["id", "start_url", "scope"]) {
+      await checkLocalReference(manifest[key], manifestPath, "manifest URL");
+    }
   }
 
   const sitemap = await readText("sitemap.xml");
@@ -536,7 +642,7 @@ await runSection("Local links and assets", async () => {
 });
 
 await runSection("Accessibility semantics", async () => {
-  for (const relativePath of ["index.html", "404.html"]) {
+  for (const relativePath of ["index.html", "it/index.html", "404.html"]) {
     const html = await readText(relativePath);
     const ids = collectIds(html);
     const idSet = new Set(ids);
@@ -662,8 +768,10 @@ await runSection("Secrets and unfinished content", async () => {
 await runSection("Performance budgets", async () => {
   const budgets = new Map([
     ["index.html", 80 * 1024],
+    ["it/index.html", 80 * 1024],
     ["404.html", 40 * 1024],
     ["assets/styles.css", 90 * 1024],
+    ["assets/i18n.js", 96 * 1024],
     ["assets/app.js", 80 * 1024],
     ["sw.js", 12 * 1024],
     ["assets/favicon.svg", 32 * 1024],
@@ -726,6 +834,7 @@ await runSection("Performance budgets", async () => {
 await runSection("Palette and case-study guardrails", async () => {
   const paletteSources = [
     "index.html",
+    "it/index.html",
     "404.html",
     "assets/styles.css",
     "assets/favicon.svg",
@@ -750,11 +859,140 @@ await runSection("Palette and case-study guardrails", async () => {
   check(JSON.stringify(actionIds) === JSON.stringify(expectedCaseIds), "Public case actions must match the approved generic set");
 });
 
+await runSection("Bilingual interface and product UX", async () => {
+  const html = await readText("index.html");
+  const italianHtml = await readText("it/index.html");
+  const errorHtml = await readText("404.html");
+  const app = await readText("assets/app.js");
+  const i18n = await readText("assets/i18n.js");
+  const styles = await readText("assets/styles.css");
+  const serviceWorker = await readText("sw.js");
+  const catalogLiteral = extractAssignedLiteral(i18n, "const IT = Object.freeze(", "{", "}");
+  check(Boolean(catalogLiteral), "Italian catalog must be a static object literal");
+  const italianCatalog = catalogLiteral ? evaluateLiteral(catalogLiteral, "Italian catalog") : null;
+
+  check(html.includes('id="languageToggle"') && html.includes('id="mobileLanguageToggle"'), "Home must expose desktop and mobile language controls");
+  check(errorHtml.includes('id="languageToggle"'), "404 must expose a language control");
+  check(html.includes('assets/i18n.js?v=5') && italianHtml.includes('/assets/i18n.js?v=5') && errorHtml.includes('/assets/i18n.js?v=5'), "Every interface must load the v5 language runtime");
+  check(i18n.includes("const STORAGE_KEY = 'mn-language'"), "Language preference must persist locally");
+  check(i18n.includes("document.documentElement.lang = language"), "Language runtime must update the document language");
+  check(i18n.includes("site-it.webmanifest?v=5"), "Italian UI must select the Italian manifest");
+  check(i18n.includes("https://mattian94.github.io/it/"), "Italian runtime metadata must use the published /it/ URL");
+  check(i18n.includes("const pathLanguage") && i18n.includes("url.pathname = nextLanguage === 'it' ? '/it/' : '/'"), "Language runtime must treat /it/ as the authoritative locale route");
+  check(i18n.includes("const italianErrorRoute") && i18n.includes("url.pathname.replace(/^\\/it"), "English toggle must escape Italian 404 paths");
+  check(i18n.includes("url.searchParams.set('lang', 'it')") && i18n.includes("url.searchParams.delete('lang')"), "404 and legacy links must retain query-language compatibility");
+  check(i18n.includes("portfolio:languagechange") && app.includes("portfolio:languagechange"), "Dynamic UI must respond to language changes");
+  check(italianHtml.includes("Generated from index.html and assets/i18n.js"), "Italian page must identify its deterministic source");
+  check(italianHtml.includes('aria-label="Passa all’inglese">EN</button>'), "Prerendered Italian page must expose a correct English switch");
+  check(JSON.stringify(collectIds(italianHtml)) === JSON.stringify(collectIds(html)), "English and Italian pages must expose the same ID contract");
+  for (const untranslated of [
+    "I turn complex work into",
+    "System patterns from real work.",
+    "Build a workflow blueprint.",
+    "Choose the least complex intervention that meets the need.",
+    "Skills demonstrated"
+  ]) {
+    check(!italianHtml.includes(untranslated), "Prerendered Italian page still contains English interface copy: " + untranslated);
+  }
+
+  if (italianCatalog) {
+    const keyLiterals = [...catalogLiteral.matchAll(/^\s*('(?:\\.|[^'\\])*')\s*:/gm)];
+    const catalogKeys = keyLiterals.map((match) => evaluateLiteral(match[1], "Italian catalog key"));
+    check(new Set(catalogKeys).size === catalogKeys.length, "Italian catalog must not contain duplicate source keys");
+
+    const dynamicStrings = [];
+    const caseLiteral = extractAssignedLiteral(app, "const caseData =", "{", "}");
+    check(Boolean(caseLiteral), "Could not locate case-study data");
+    const caseContent = caseLiteral ? evaluateLiteral(caseLiteral, "case-study data") : null;
+    if (caseContent) collectStrings(caseContent, dynamicStrings);
+
+    const blueprintLiteral = extractAssignedLiteral(app, "const scenarioBlueprints =", "{", "}");
+    check(Boolean(blueprintLiteral), "Could not locate workflow blueprint data");
+    const blueprintContent = blueprintLiteral ? evaluateLiteral(blueprintLiteral, "workflow blueprint data") : null;
+    if (blueprintContent) {
+      for (const plan of Object.values(blueprintContent)) {
+        dynamicStrings.push(plan.before, plan.logic, ...(plan.gates || []));
+        for (const step of plan.steps || []) dynamicStrings.push(step[0], step[1]);
+      }
+    }
+
+    const commandsLiteral = extractAssignedLiteral(app, "const commands =", "[", "]");
+    check(Boolean(commandsLiteral), "Could not locate command definitions");
+    if (commandsLiteral) {
+      const propertyPattern = /\b(?:title|detail|keywords)\s*:\s*('(?:\\.|[^'\\])*')/g;
+      for (const match of commandsLiteral.matchAll(propertyPattern)) {
+        const value = evaluateLiteral(match[1], "command copy");
+        if (typeof value === "string") dynamicStrings.push(value);
+      }
+    }
+
+    for (const sourceCode of [app, errorHtml]) {
+      const directTranslationPattern = /\b(?:tr|translate|showToast)\(\s*('(?:\\.|[^'\\])*')/g;
+      for (const match of sourceCode.matchAll(directTranslationPattern)) {
+        const value = evaluateLiteral(match[1], "direct translated copy");
+        if (typeof value === "string") dynamicStrings.push(value);
+      }
+    }
+
+    const profileMatch = app.match(/\bconst\s+profileSummary\s*=\s*('(?:\\.|[^'\\])*')/);
+    check(Boolean(profileMatch), "Could not locate the short profile summary");
+    if (profileMatch) dynamicStrings.push(evaluateLiteral(profileMatch[1], "short profile summary"));
+
+    for (const source of [...new Set(dynamicStrings)]) {
+      check(
+        Object.prototype.hasOwnProperty.call(italianCatalog, source),
+        "Italian catalog is missing dynamic copy: " + source
+      );
+    }
+
+    for (const [source, translated] of Object.entries(italianCatalog)) {
+      const sourceTokens = [...source.matchAll(/\{([a-z]+)\}/gi)].map((match) => match[1]).sort();
+      const translatedTokens = [...String(translated).matchAll(/\{([a-z]+)\}/gi)].map((match) => match[1]).sort();
+      check(
+        JSON.stringify(sourceTokens) === JSON.stringify(translatedTokens),
+        "Italian translation must preserve placeholders for: " + source
+      );
+    }
+  }
+
+  const ladderLevels = [...html.matchAll(/<section class="solution-ladder[\s\S]*?<\/section>/g)]
+    .flatMap((match) => [...match[0].matchAll(/<li>/g)]);
+  check(html.includes('id="solution-ladder-title"'), "Solution Ladder must be present and labelled");
+  check(ladderLevels.length === 6, "Solution Ladder must contain exactly six intervention levels");
+  for (const label of ["Simplify", "Structure", "Automate", "Assist", "Orchestrate", "Productise"]) {
+    check(html.includes("<strong>" + label + "</strong>"), "Solution Ladder is missing level: " + label);
+    check(i18n.includes("'" + label + "':"), "Italian catalog is missing Solution Ladder level: " + label);
+  }
+
+  check(html.includes('id="caseCounter"') && html.includes('id="caseCounterStatus"'), "Mobile system carousel must expose visual and live counters");
+  check(app.includes("nearestCarouselCase") && app.includes("interfaceCopy.casePosition"), "Mobile system counter logic is missing");
+  check(app.includes("if (!compactViewport.matches) return;\n      const card"), "System counter announcements must remain mobile-only");
+  check(styles.includes(".case-carousel-meta") && styles.includes(".case-counter"), "Mobile system counter styling is missing");
+  for (const animation of ["orbit-turn", "trace-packet", "source-chip-in", "reveal-in"]) {
+    check(styles.includes("@keyframes " + animation), "Restored interface animation is missing: " + animation);
+  }
+  check(styles.includes("@media (prefers-reduced-motion: reduce)"), "Animations must retain a reduced-motion fallback");
+
+  check(html.includes('role="combobox"') && html.includes('aria-autocomplete="list"'), "Evidence search must use combobox semantics");
+  check(html.includes('id="commandStatus"') && html.includes('id="commandEmpty"'), "Evidence search must expose result status and empty state");
+  check(app.includes("aria-activedescendant") && app.includes("commandResultCount"), "Evidence search keyboard and announcement logic is incomplete");
+  check(app.includes("Skills demonstrated") && !app.includes("My contribution"), "Case summaries must use the generic Skills demonstrated label");
+
+  check(/^const CACHE_NAME = 'mn-portfolio-v5';/m.test(serviceWorker), "Service worker cache must use v5");
+  for (const asset of ["/it/index.html", "/assets/i18n.js?v=5", "/site-it.webmanifest?v=5"]) {
+    check(serviceWorker.includes("'" + asset + "'"), "Service worker must precache " + asset);
+  }
+  check(serviceWorker.includes("url.pathname.startsWith('/it/')") && serviceWorker.includes("'/it/index.html'"), "Offline navigation must use the Italian fallback for /it/ paths");
+  check(serviceWorker.includes("event.waitUntil(refresh.catch"), "Background cache refresh must extend the service-worker event lifetime");
+  check(!/[?]v=4\b|mn-portfolio-v4\b/.test([html, errorHtml, serviceWorker].join("\n")), "Public entry points must not retain v4 cache references");
+});
+
 await runSection("Repository configuration", async () => {
   const packageJson = JSON.parse(await readText("package.json"));
   check(packageJson.private === true, "package.json must remain private");
   check(packageJson.type === "module", "package.json must use ES modules");
-  check(packageJson.scripts && packageJson.scripts.validate === "node scripts/validate.mjs", "package.json validate script is incorrect");
+  check(packageJson.scripts && packageJson.scripts["generate:it"] === "node scripts/generate-localized-page.mjs", "package.json Italian generation script is incorrect");
+  check(packageJson.scripts && packageJson.scripts.validate === "npm run check:it && node scripts/validate.mjs", "package.json validate script must include the Italian anti-drift check");
   check(!packageJson.dependencies || Object.keys(packageJson.dependencies).length === 0, "Runtime dependencies are not allowed");
   check(!packageJson.devDependencies || Object.keys(packageJson.devDependencies).length === 0, "Development dependencies are not required");
   check(packageJson.homepage === SITE_URL, "package.json homepage must equal the canonical site URL");
@@ -781,6 +1019,8 @@ await runSection("Repository configuration", async () => {
   check(pages.includes("actions/upload-artifact@v4"), "pages.yml must upload the prepared Pages artifact");
   check(pages.includes("actions/deploy-pages@v4"), "pages.yml must deploy through GitHub Pages");
   check(pages.includes("sw.js"), "pages.yml must stage the service worker");
+  check(pages.includes("site-it.webmanifest"), "pages.yml must stage the Italian manifest");
+  check(pages.includes("cp it/index.html _site/it/index.html"), "pages.yml must stage the prerendered Italian page");
   check(pages.includes("artifact.tar") && pages.includes("name: github-pages"), "pages.yml must create the Pages artifact format");
   check(pages.includes("cp .nojekyll") && pages.includes("cp .well-known/security.txt"), "pages.yml must stage .nojekyll and .well-known/security.txt");
   check(/--directory\s+_site/.test(pages) && !pages.includes('--exclude=".[^/]*"'), "pages.yml must archive hidden standards files from _site");

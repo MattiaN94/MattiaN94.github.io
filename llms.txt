@@ -7,6 +7,7 @@
 ## Canonical source
 
 - [Portfolio home](https://mattian94.github.io/): canonical public profile and interactive portfolio.
+- [Italian interface](https://mattian94.github.io/it/): complete Italian version of the interactive portfolio.
 - [Expanded machine-readable profile](https://mattian94.github.io/llms-full.txt): detailed factual context and evidence map.
 
 ## Useful sections
@@ -14,6 +15,7 @@
 - [Selected product systems](https://mattian94.github.io/#work): anonymised system patterns and decision logs.
 - [Interactive Workflow Lab](https://mattian94.github.io/#lab): local demonstration of hybrid workflow decisions and useful measurement signals.
 - [Product method and responsible AI](https://mattian94.github.io/#approach): framing, architecture, evaluation and boundaries.
+- [Solution ladder](https://mattian94.github.io/#approach): a least-complex-first path from simplification to productisation.
 - [Experience](https://mattian94.github.io/#experience): career path across communication, NLP product work and AI systems.
 - [Capability-to-evidence map](https://mattian94.github.io/#toolkit): skills linked to supporting portfolio evidence.
 - [Education and leadership](https://mattian94.github.io/#background): university, FERPI, teaching and public work.
@@ -60,4 +62,4 @@ calls, unless a page explicitly states otherwise.
 - LinkedIn: https://www.linkedin.com/in/mattia-necchio
 - Portfolio contact section: https://mattian94.github.io/#contact
 
-Last reviewed: 2026-07-11
+Last reviewed: 2026-07-12

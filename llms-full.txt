@@ -1,8 +1,9 @@
 # Mattia Necchio — expanded machine-readable portfolio context
 
 Canonical URL: https://mattian94.github.io/
-Last reviewed: 2026-07-11
-Language: English
+Last reviewed: 2026-07-12
+Languages: English and Italian interface
+Italian URL: https://mattian94.github.io/it/
 
 ## Positioning
 
@@ -27,6 +28,15 @@ human-in-the-loop controls.
 6. Operationalise ownership, feedback and the production handoff.
 
 Core principle: understand the work before choosing the model.
+
+## Solution ladder
+
+Choose the least complex intervention that reliably solves the workflow:
+simplify the experience, structure inputs and ownership, automate repeatable
+logic, add evidence-bound AI assistance, orchestrate tools and handoffs, then
+productise only when dedicated UX, permissions, evaluation and support are
+justified. These are options, not maturity levels; stopping early is a valid
+product decision.
 
 ## Responsible AI boundaries
 

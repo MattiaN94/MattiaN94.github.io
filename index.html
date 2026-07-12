@@ -12,18 +12,22 @@
 
   <title>AI Product &amp; Workflow Designer | Mattia Necchio</title>
   <link rel="canonical" href="https://mattian94.github.io/">
-  <link rel="icon" href="assets/favicon.svg?v=4" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=4">
-  <link rel="manifest" href="site.webmanifest?v=4">
-  <link rel="stylesheet" href="assets/styles.css?v=4">
+  <link rel="alternate" hreflang="en" href="https://mattian94.github.io/">
+  <link rel="alternate" hreflang="it" href="https://mattian94.github.io/it/">
+  <link rel="alternate" hreflang="x-default" href="https://mattian94.github.io/">
+  <link rel="icon" href="assets/favicon.svg?v=5" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=5">
+  <link rel="manifest" href="site.webmanifest?v=5">
+  <link rel="stylesheet" href="assets/styles.css?v=5">
 
   <meta property="og:type" content="profile">
   <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="it_IT">
   <meta property="og:site_name" content="Mattia Necchio — AI Product Portfolio">
   <meta property="og:title" content="AI Product &amp; Workflow Designer | Mattia Necchio">
   <meta property="og:description" content="Useful AI products for complex workflows — with clear rules, practical checks and human judgement built in.">
   <meta property="og:url" content="https://mattian94.github.io/">
-  <meta property="og:image" content="https://mattian94.github.io/assets/og-card.png?v=4">
+  <meta property="og:image" content="https://mattian94.github.io/assets/og-card.png?v=5">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Mattia Necchio, AI Product and Workflow Designer — from messy work to useful systems">
@@ -33,7 +37,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AI Product &amp; Workflow Designer | Mattia Necchio">
   <meta name="twitter:description" content="Useful AI products for complex workflows, from first map to tested prototype.">
-  <meta name="twitter:image" content="https://mattian94.github.io/assets/og-card.png?v=4">
+  <meta name="twitter:image" content="https://mattian94.github.io/assets/og-card.png?v=5">
 
   <script type="application/ld+json">
   {
@@ -53,7 +57,7 @@
     "@id": "https://mattian94.github.io/#profile",
     "url": "https://mattian94.github.io/",
     "name": "Mattia Necchio — AI Product & Workflow Designer",
-    "dateModified": "2026-07-11",
+    "dateModified": "2026-07-12",
     "isPartOf": { "@id": "https://mattian94.github.io/#website" },
     "mainEntity": { "@id": "https://mattian94.github.io/#mattia" }
   }
@@ -88,7 +92,8 @@
     ]
   }
   </script>
-  <script src="assets/app.js?v=4" defer></script>
+  <script src="assets/i18n.js?v=5" defer></script>
+  <script src="assets/app.js?v=5" defer></script>
 </head>
 <body id="top">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -120,6 +125,7 @@
           <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>
           <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 15.6A8.5 8.5 0 0 1 8.4 3.6a8.5 8.5 0 1 0 12 12Z"/></svg>
         </button>
+        <button class="language-toggle" id="languageToggle" type="button" aria-label="Switch to Italian">IT</button>
         <button class="button button-dark nav-tour" id="tourTrigger" type="button" aria-haspopup="dialog">90-sec tour</button>
         <button class="icon-button menu-toggle" id="menuToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -133,6 +139,7 @@
       <a href="#approach">Approach</a>
       <a href="#experience">Experience</a>
       <a href="#contact">Contact</a>
+      <button class="button button-ghost" id="mobileLanguageToggle" type="button" aria-label="Switch to Italian">Italiano</button>
       <button class="button button-accent" type="button" data-open-tour>Start 90-sec tour</button>
     </div>
   </header>
@@ -198,7 +205,11 @@
         </div>
       </div>
 
-      <p class="case-swipe-hint" aria-hidden="true">Swipe to explore the systems →</p>
+      <div class="case-carousel-meta">
+        <p class="case-swipe-hint" aria-hidden="true">Swipe to explore the systems →</p>
+        <span class="case-counter" id="caseCounter" aria-hidden="true">01 / 07</span>
+        <span class="sr-only" id="caseCounterStatus" role="status" aria-live="polite" aria-atomic="true">System 1 of 7</span>
+      </div>
 
       <div class="case-grid">
         <article class="case-card case-card-featured reveal" id="case-research">
@@ -368,6 +379,22 @@
         <li class="reveal"><details class="mobile-disclosure" open><summary><span>06</span><h3>Operationalise</h3><i aria-hidden="true">+</i></summary><p>Set ownership, monitoring and feedback loops.</p></details></li>
       </ol>
 
+      <section class="solution-ladder reveal" aria-labelledby="solution-ladder-title">
+        <div class="solution-ladder-heading">
+          <div><p class="kicker">Solution ladder</p><h3 id="solution-ladder-title">Choose the least complex intervention that meets the need.</h3></div>
+          <p>These are options, not a maturity score. Move up only when the previous level cannot solve the workflow reliably.</p>
+        </div>
+        <ol>
+          <li><span>01</span><strong>Simplify</strong><p>Remove steps, clarify the decision and improve the interface.</p></li>
+          <li><span>02</span><strong>Structure</strong><p>Standardise inputs, ownership, states and source data.</p></li>
+          <li><span>03</span><strong>Automate</strong><p>Use rules for repeatable validation, calculation and routing.</p></li>
+          <li><span>04</span><strong>Assist</strong><p>Use AI for variable language, retrieval, synthesis or explanation, with evidence and review.</p></li>
+          <li><span>05</span><strong>Orchestrate</strong><p>Connect tools, agents and handoffs around shared state and approval gates.</p></li>
+          <li><span>06</span><strong>Productise</strong><p>Add dedicated UX, permissions, evaluation, monitoring and support.</p></li>
+        </ol>
+        <p class="solution-ladder-note">Stop at any level. Added complexity is justified only when it improves a useful outcome.</p>
+      </section>
+
       <div class="principle-panel reveal">
         <div>
           <p class="kicker">Responsible by design</p>
@@ -517,11 +544,13 @@
       <div class="command-input-wrap">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.35-4.35m2.35-5.4A7.75 7.75 0 1 1 3.5 11.25a7.75 7.75 0 0 1 15.5 0Z"/></svg>
         <label class="sr-only" for="commandInput" id="commandTitle">Find portfolio evidence or run a command</label>
-        <input id="commandInput" type="search" autocomplete="off" placeholder="Try “human review” or “product discovery”…">
-        <kbd>ESC</kbd>
+        <input id="commandInput" type="search" role="combobox" autocomplete="off" aria-autocomplete="list" aria-haspopup="listbox" aria-controls="commandResults" aria-expanded="false" placeholder="Try “human review” or “product discovery”…">
+        <button class="command-close" id="commandClose" type="button" data-close-dialog aria-label="Close evidence search">ESC</button>
       </div>
       <p class="command-privacy"><span aria-hidden="true">●</span> On-device evidence search · nothing leaves your browser</p>
+      <p class="sr-only" id="commandStatus" role="status" aria-live="polite" aria-atomic="true"></p>
       <div class="command-results" id="commandResults" role="listbox" aria-label="Search results"></div>
+      <p class="command-empty" id="commandEmpty" hidden>No exact match. Try “human review”, “product discovery”, “evaluation” or “inspect”.</p>
       <div class="command-help"><span><kbd>↑</kbd><kbd>↓</kbd> navigate</span><span><kbd>↵</kbd> select</span><span>Tip: type “inspect”</span></div>
     </div>
   </dialog>

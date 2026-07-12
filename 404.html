@@ -10,13 +10,15 @@
   <meta name="theme-color" content="#0d0f13" media="(prefers-color-scheme: dark)">
   <meta name="color-scheme" content="light dark">
   <title>Page not found | Mattia Necchio</title>
-  <link rel="manifest" href="/site.webmanifest?v=4">
+  <link rel="manifest" href="/site.webmanifest?v=5">
   <style>
     :root {
       --bg: #f4f1ea;
-      --paper: rgba(255, 255, 255, .74);
+      --paper: #fbfaf7;
       --paper-solid: #fbfaf7;
       --ink: #111318;
+      --dark-panel: #111318;
+      --on-dark: #ffffff;
       --muted: #676b74;
       --line: rgba(17, 19, 24, .14);
       --accent: #5b52d6;
@@ -44,10 +46,7 @@
       min-height: 100svh;
       margin: 0;
       color: var(--ink);
-      background:
-        radial-gradient(circle at 8% 8%, rgba(91, 82, 214, .22), transparent 25rem),
-        radial-gradient(circle at 94% 24%, rgba(49, 168, 196, .14), transparent 28rem),
-        var(--bg);
+      background: var(--bg);
       font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.55;
       letter-spacing: -.01em;
@@ -101,9 +100,8 @@
       padding: 10px 12px 10px 18px;
       border: 1px solid var(--line);
       border-radius: 999px;
-      background: var(--paper);
+      background: var(--paper-solid);
       box-shadow: 0 10px 40px rgba(17, 19, 24, .07);
-      backdrop-filter: blur(18px);
     }
 
     .brand {
@@ -123,7 +121,7 @@
       place-items: center;
       flex: 0 0 auto;
       border-radius: 50%;
-      background: var(--ink);
+      background: var(--dark-panel);
       color: var(--accent-on-dark);
       font-size: 13px;
       letter-spacing: -.05em;
@@ -135,10 +133,30 @@
       min-height: 42px;
       padding: 9px 15px;
       border-radius: 999px;
-      background: var(--ink);
-      color: white;
+      background: var(--dark-panel);
+      color: var(--on-dark);
       font-weight: 760;
       text-decoration: none;
+    }
+
+    .nav-side {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .language-toggle {
+      min-width: 42px;
+      min-height: 42px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper-solid);
+      color: var(--muted);
+      cursor: pointer;
+      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      font-size: 11px;
+      font-weight: 850;
     }
 
     main {
@@ -211,7 +229,7 @@
       padding: .08em .35em;
       border: 1px solid var(--line);
       border-radius: .45em;
-      background: rgba(255, 255, 255, .5);
+      background: var(--paper-solid);
       color: var(--ink);
       font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
       font-size: .78em;
@@ -233,7 +251,7 @@
       padding: 11px 18px;
       border: 1px solid var(--line);
       border-radius: 999px;
-      background: var(--paper);
+      background: var(--paper-solid);
       color: var(--ink);
       cursor: pointer;
       font-weight: 760;
@@ -242,9 +260,9 @@
     }
 
     .action.primary {
-      border-color: var(--ink);
-      background: var(--ink);
-      color: white;
+      border-color: var(--dark-panel);
+      background: var(--dark-panel);
+      color: var(--on-dark);
     }
 
     .action.repair {
@@ -273,8 +291,8 @@
       padding: clamp(24px, 4vw, 36px);
       border: 1px solid var(--line);
       border-radius: var(--radius-xl);
-      background: var(--ink);
-      color: white;
+      background: var(--dark-panel);
+      color: var(--on-dark);
       box-shadow: var(--shadow);
       isolation: isolate;
     }
@@ -488,7 +506,7 @@
     @media (prefers-color-scheme: dark) {
       :root {
         --bg: #0d0f13;
-        --paper: rgba(24, 27, 33, .78);
+        --paper: #171a20;
         --paper-solid: #171a20;
         --ink: #f4f5f7;
         --muted: #a6abb5;
@@ -497,14 +515,11 @@
       }
 
       body {
-        background:
-          radial-gradient(circle at 8% 8%, rgba(142, 136, 255, .14), transparent 25rem),
-          radial-gradient(circle at 94% 24%, rgba(49, 168, 196, .1), transparent 28rem),
-          var(--bg);
+        background: var(--bg);
       }
 
       .nav {
-        background: rgba(23, 26, 32, .82);
+        background: var(--paper-solid);
       }
 
       .nav-home {
@@ -517,7 +532,7 @@
       }
 
       .path {
-        background: rgba(255, 255, 255, .06);
+        background: var(--paper-solid);
       }
     }
 
@@ -621,6 +636,7 @@
   <script>
     document.documentElement.classList.replace("no-js", "js");
   </script>
+  <script src="/assets/i18n.js?v=5" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to recovery options</a>
@@ -631,7 +647,10 @@
         <span class="brand-mark" aria-hidden="true">MN</span>
         <span>Mattia Necchio</span>
       </a>
-      <a class="nav-home" href="/">Portfolio home</a>
+      <div class="nav-side">
+        <button class="language-toggle" id="languageToggle" type="button" aria-label="Switch to Italian">IT</button>
+        <a class="nav-home" href="/">Portfolio home</a>
+      </div>
     </nav>
   </header>
 
@@ -717,6 +736,16 @@
       var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       var running = false;
 
+      function translate(text) {
+        return window.portfolioI18n ? window.portfolioI18n.t(text) : text;
+      }
+
+      function setStatus(strongText, bodyText) {
+        var strong = document.createElement("strong");
+        strong.textContent = translate(strongText);
+        status.replaceChildren(strong, document.createTextNode(" " + translate(bodyText)));
+      }
+
       path.textContent = window.location.pathname || "/";
 
       function wait(milliseconds) {
@@ -728,7 +757,7 @@
       function setStep(index, state, label) {
         var step = steps[index];
         step.dataset.state = state;
-        step.querySelector(".step-status").textContent = label;
+        step.querySelector(".step-status").textContent = translate(label);
         steps.forEach(function (item) {
           item.removeAttribute("aria-current");
         });
@@ -741,7 +770,7 @@
         steps.forEach(function (step) {
           step.dataset.state = "pending";
           step.removeAttribute("aria-current");
-          step.querySelector(".step-status").textContent = "Pending";
+          step.querySelector(".step-status").textContent = translate("Pending");
         });
       }
 
@@ -754,7 +783,7 @@
         button.disabled = true;
         workflow.setAttribute("aria-busy", "true");
         resetSteps();
-        status.innerHTML = "<strong>Checking.</strong> Validating this route without sending data anywhere.";
+        setStatus("Checking.", "Validating this route without sending data anywhere.");
 
         setStep(0, "active", "Reading");
         await wait(360);
@@ -772,10 +801,10 @@
         await wait(260);
         setStep(3, "done", "In control");
 
-        status.innerHTML = "<strong>Recovery path ready.</strong> Choose a verified destination; no automatic redirect will override you.";
+        setStatus("Recovery path ready.", "Choose a verified destination; no automatic redirect will override you.");
         workflow.removeAttribute("aria-busy");
         button.disabled = false;
-        button.textContent = "Run check again";
+        button.textContent = translate("Run check again");
         running = false;
       }
 

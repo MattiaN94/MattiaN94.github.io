@@ -4,6 +4,18 @@
   const root = document.documentElement;
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const toast = document.getElementById('toast');
+  const tr = (source, replacements = {}) => {
+    const translated = window.portfolioI18n?.t?.(source) ?? source;
+    return String(translated).replace(/\{([a-z]+)\}/gi, (match, key) => (
+      Object.prototype.hasOwnProperty.call(replacements, key) ? String(replacements[key]) : match
+    ));
+  };
+  const activeLanguage = () => window.portfolioI18n?.language || root.lang || 'en';
+  const interfaceCopy = Object.freeze({
+    commandNoResults: () => tr('No exact match. Try “human review”, “product discovery”, “evaluation” or “inspect”.'),
+    commandResultCount: (count) => tr(count === 1 ? '{count} result available' : '{count} results available', { count }),
+    casePosition: (current, total) => tr('System {current} of {total}', { current, total })
+  });
   let toastTimer;
   let lastDialogTrigger = null;
 
@@ -19,7 +31,7 @@
   const showToast = (message) => {
     if (!toast) return;
     window.clearTimeout(toastTimer);
-    toast.textContent = message;
+    toast.textContent = tr(message);
     toast.classList.add('show');
     toastTimer = window.setTimeout(() => toast.classList.remove('show'), 2200);
   };
@@ -79,7 +91,7 @@
     const nextTheme = theme === 'dark' ? 'dark' : 'light';
     root.setAttribute('data-theme', nextTheme);
     themeToggle?.setAttribute('aria-pressed', String(nextTheme === 'dark'));
-    themeToggle?.setAttribute('aria-label', `Switch to ${nextTheme === 'dark' ? 'light' : 'dark'} theme`);
+    themeToggle?.setAttribute('aria-label', tr(nextTheme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'));
     if (persist) safeStorage.set('mn-theme', nextTheme);
   };
 
@@ -143,7 +155,7 @@
   const setMenu = (open) => {
     if (!menuToggle || !mobileMenu) return;
     menuToggle.setAttribute('aria-expanded', String(open));
-    menuToggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+    menuToggle.setAttribute('aria-label', tr(open ? 'Close navigation menu' : 'Open navigation menu'));
     mobileMenu.hidden = !open;
   };
   menuToggle?.addEventListener('click', () => setMenu(menuToggle.getAttribute('aria-expanded') !== 'true'));
@@ -183,6 +195,80 @@
     });
   });
 
+  // Mobile case carousel position: visual updates stay responsive while live announcements wait for scroll to settle.
+  const caseGrid = document.querySelector('.case-grid');
+  const caseCards = caseGrid ? [...caseGrid.querySelectorAll('.case-card')] : [];
+  const caseCounter = document.getElementById('caseCounter');
+  const caseCounterStatus = document.getElementById('caseCounterStatus');
+  let activeCarouselCase = -1;
+  let announcedCarouselCase = -1;
+  let caseCounterFrame = null;
+  let caseCounterTimer = null;
+
+  const setCaseCounter = (index, announce = false) => {
+    if (!caseCards.length || index < 0 || index >= caseCards.length) return;
+    const current = index + 1;
+    const total = caseCards.length;
+    if (activeCarouselCase !== index) {
+      activeCarouselCase = index;
+      if (caseCounter) caseCounter.textContent = `${String(current).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+    }
+    if (announce && announcedCarouselCase !== index) {
+      announcedCarouselCase = index;
+      if (caseCounterStatus) caseCounterStatus.textContent = interfaceCopy.casePosition(current, total);
+    }
+  };
+
+  const nearestCarouselCase = () => {
+    if (!caseGrid || !caseCards.length) return -1;
+    const gridRect = caseGrid.getBoundingClientRect();
+    const gridCentre = gridRect.left + (gridRect.width / 2);
+    let closestIndex = 0;
+    let closestDistance = Number.POSITIVE_INFINITY;
+    caseCards.forEach((card, index) => {
+      const cardRect = card.getBoundingClientRect();
+      const distance = Math.abs((cardRect.left + (cardRect.width / 2)) - gridCentre);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    });
+    return closestIndex;
+  };
+
+  const updateCaseCounter = (announce = false) => {
+    if (!compactViewport.matches) return;
+    setCaseCounter(nearestCarouselCase(), announce);
+  };
+
+  const requestCaseCounterUpdate = () => {
+    if (!compactViewport.matches) return;
+    if (!caseCounterFrame) {
+      caseCounterFrame = window.requestAnimationFrame(() => {
+        caseCounterFrame = null;
+        updateCaseCounter(false);
+      });
+    }
+    window.clearTimeout(caseCounterTimer);
+    caseCounterTimer = window.setTimeout(() => updateCaseCounter(true), 160);
+  };
+
+  if (caseGrid && caseCards.length) {
+    setCaseCounter(0, false);
+    caseGrid.addEventListener('scroll', requestCaseCounterUpdate, { passive: true });
+    caseGrid.addEventListener('focusin', (event) => {
+      if (!compactViewport.matches) return;
+      const card = event.target instanceof Element ? event.target.closest('.case-card') : null;
+      const index = caseCards.indexOf(card);
+      if (index >= 0) setCaseCounter(index, true);
+    });
+    window.addEventListener('resize', requestCaseCounterUpdate, { passive: true });
+    compactViewport.addEventListener?.('change', () => {
+      if (compactViewport.matches) requestCaseCounterUpdate();
+    });
+    updateCaseCounter(false);
+  }
+
   // Case-study decision logs. All text is static and rendered with textContent.
   const caseData = {
     research: {
@@ -191,7 +277,7 @@
       summary: [
         ['User', 'Cross-functional teams working across heterogeneous sources'],
         ['Status', 'Reusable anonymised composite'],
-        ['My contribution', 'Workflow design, orchestration logic, QA and prototype']
+        ['Skills demonstrated', 'Workflow design, orchestration, QA and prototyping']
       ],
       details: [
         ['The problem', 'Knowledge work begins across documents, websites, structured sources and notes. Manual copy-paste obscures provenance, makes comparison costly and turns every output into a one-off effort.'],
@@ -212,7 +298,7 @@
       summary: [
         ['User', 'Teams comparing complex qualitative options and scenarios'],
         ['Status', 'Prototype and pre-calibration workflow pattern'],
-        ['My contribution', 'Evidence model, rubric design, agent flow, scoring and review logic']
+        ['Skills demonstrated', 'Evidence modelling, rubric design, agent flow, scoring and review logic']
       ],
       details: [
         ['The problem', 'Complex evaluations mix observed facts, interpretation and speculation. A polished score can hide weak evidence or mirror the starting hypothesis.'],
@@ -233,7 +319,7 @@
       summary: [
         ['User', 'Non-technical teams producing recurring structured outputs'],
         ['Status', 'Adaptation and product-hardening pattern'],
-        ['My contribution', 'UX simplification, configuration, bulk-data flow, security and deploy readiness']
+        ['Skills demonstrated', 'UX simplification, configuration, batch data flows, security hardening and deployment readiness']
       ],
       details: [
         ['The problem', 'Small changes and team-wide updates often bounce between data sources, specialists and administrators, creating rework and inconsistent outputs.'],
@@ -254,7 +340,7 @@
       summary: [
         ['User', 'Analysts producing recurring business outputs'],
         ['Status', 'Structured analysis and reporting pattern'],
-        ['My contribution', 'Pipeline design, validation boundaries and output system']
+        ['Skills demonstrated', 'Pipeline design, validation boundaries and output architecture']
       ],
       details: [
         ['The problem', 'Recurring analysis becomes fragile when calculations, interpretation and document production live in one opaque workflow.'],
@@ -275,7 +361,7 @@
       summary: [
         ['User', 'Analysts, contributors and authorised reviewers'],
         ['Surfaces', 'Browser and installed-client inputs, operational views, structured storage and role-aware outputs'],
-        ['My contribution', 'Workflow mapping, UX, data model, measurement logic, prototype and evaluation']
+        ['Skills demonstrated', 'Workflow mapping, UX, data modelling, measurement logic, prototyping and evaluation']
       ],
       details: [
         ['The problem', 'Distributed analysis becomes a stateful product once access, multiple input paths, shared calculations, status, evidence, review and useful outputs need to stay aligned.'],
@@ -296,7 +382,7 @@
       summary: [
         ['User', 'Teams delivering complex, evidence-heavy outputs'],
         ['Status', 'Multi-stage agentic workflow pattern'],
-        ['My contribution', 'Workflow architecture, stage contracts, decision log and QA boundaries']
+        ['Skills demonstrated', 'Workflow architecture, stage contracts, decision records and QA boundaries']
       ],
       details: [
         ['The problem', 'Large knowledge tasks create missed constraints, generic reuse and repeated questions. Intake, research, option design and production often drift apart before final review.'],
@@ -317,7 +403,7 @@
       summary: [
         ['User', 'Operators managing multiple software products and releases'],
         ['Status', 'Production-oriented architecture, not claimed as live production'],
-        ['My contribution', 'Product architecture, operator UX, safety gates and prototype system']
+        ['Skills demonstrated', 'Product architecture, operator UX, safety gates and system prototyping']
       ],
       details: [
         ['The problem', 'AI-assisted maintenance becomes unsafe when intent, code changes, tests, deployment state and rollback live in disconnected tools or opaque agents.'],
@@ -346,7 +432,7 @@
   const makeElement = (tag, className, text) => {
     const element = document.createElement(tag);
     if (className) element.className = className;
-    if (typeof text === 'string') element.textContent = text;
+    if (typeof text === 'string') element.textContent = tr(text);
     return element;
   };
 
@@ -354,8 +440,8 @@
     const data = caseData[caseId];
     if (!data || !caseDialogBody) return;
     activeCase = caseId;
-    caseDialogTitle.textContent = data.title;
-    caseDialogEyebrow.textContent = data.eyebrow;
+    caseDialogTitle.textContent = tr(data.title);
+    caseDialogEyebrow.textContent = tr(data.eyebrow);
     caseDialogBody.replaceChildren();
 
     const summary = makeElement('div', 'case-summary');
@@ -407,7 +493,13 @@
     caseDialog?.scrollTo({ top: 0, behavior: prefersReducedMotion.matches ? 'auto' : 'smooth' });
   });
 
-  copyCaseLink?.addEventListener('click', () => copyText(`${window.location.origin}${window.location.pathname}#case-${activeCase}`, 'Case link copied'));
+  copyCaseLink?.addEventListener('click', () => {
+    const url = new URL(window.location.href);
+    url.searchParams.delete('view');
+    url.searchParams.delete('inspect');
+    url.hash = `case-${activeCase}`;
+    copyText(url.toString(), 'Case link copied');
+  });
 
   const handleCaseHash = () => {
     const match = window.location.hash.match(/^#case-(research|evaluation|platform|reporting|measurement|orchestration|control)$/);
@@ -431,7 +523,12 @@
     });
     if (tourProgress) tourProgress.style.width = `${((tourIndex + 1) / tourSlides.length) * 100}%`;
     if (tourBack) tourBack.disabled = tourIndex === 0;
-    if (tourNext) tourNext.innerHTML = tourIndex === tourSlides.length - 1 ? 'Finish <span aria-hidden="true">→</span>' : 'Next <span aria-hidden="true">→</span>';
+    if (tourNext) {
+      const arrow = document.createElement('span');
+      arrow.setAttribute('aria-hidden', 'true');
+      arrow.textContent = '→';
+      tourNext.replaceChildren(document.createTextNode(`${tr(tourIndex === tourSlides.length - 1 ? 'Finish' : 'Next')} `), arrow);
+    }
   };
 
   const startTour = (trigger) => {
@@ -563,7 +660,7 @@
     if (state.ambiguity === 1 && (steps[2]?.[2] === 'ai' || steps[1]?.[2] === 'ai')) {
       const target = steps.find((step) => step[2] === 'ai');
       if (target) {
-        target[1] = `${target[1]} within a constrained taxonomy`;
+        target[1] = `${tr(target[1])} ${tr('within a constrained taxonomy')}`;
         target[2] = 'rule';
       }
     }
@@ -580,9 +677,9 @@
 
     const highControl = state.risk === 3 || state.sensitive;
     const exploratory = state.risk === 1 && state.ambiguity === 3;
-    blueprintMode.textContent = highControl ? 'High-control' : exploratory ? 'Exploration-first' : 'Balanced control';
-    beforeFlow.textContent = plan.before;
-    decisionLogic.textContent = `${plan.logic} ${highControl ? 'High-risk or sensitive work receives explicit approval and an auditable exception path.' : 'Review effort is concentrated on uncertainty and exceptions.'} Measure corrections, exceptions and time to completion — not output volume.`;
+    blueprintMode.textContent = tr(highControl ? 'High-control' : exploratory ? 'Exploration-first' : 'Balanced control');
+    beforeFlow.textContent = tr(plan.before);
+    decisionLogic.textContent = `${tr(plan.logic)} ${tr(highControl ? 'High-risk or sensitive work receives explicit approval and an auditable exception path.' : 'Review effort is concentrated on uncertainty and exceptions.')} ${tr('Measure corrections, exceptions and time to completion — not output volume.')}`;
 
     blueprint.replaceChildren();
     blueprint.style.setProperty('--steps', String(steps.length));
@@ -590,7 +687,7 @@
       const step = makeElement('div', `blueprint-step type-${type}`);
       step.style.setProperty('--step-index', String(index));
       step.append(
-        makeElement('em', '', `${String(index + 1).padStart(2, '0')} · ${type === 'rule' ? 'deterministic' : type === 'ai' ? 'AI' : 'human'}`),
+        makeElement('em', '', `${String(index + 1).padStart(2, '0')} · ${tr(type === 'rule' ? 'deterministic' : type === 'ai' ? 'AI' : 'human')}`),
         makeElement('b', '', name),
         makeElement('small', '', description)
       );
@@ -607,24 +704,30 @@
       return item;
     }));
 
+    const labUrl = new URL(activeLanguage() === 'it' ? '/it/' : '/', window.location.origin);
+    labUrl.hash = 'lab';
     lastBlueprintText = [
-      `Workflow blueprint: ${state.scenario}`,
-      `Mode: ${blueprintMode.textContent}`,
-      `Before: ${plan.before}`,
+      `${tr('Workflow blueprint')}: ${tr(state.scenario)}`,
+      `${tr('Mode')}: ${blueprintMode.textContent}`,
+      `${tr('Before')}: ${tr(plan.before)}`,
       '',
-      ...steps.map(([name, description, type], index) => `${index + 1}. ${name} [${type.toUpperCase()}] — ${description}`),
+      ...steps.map(([name, description, type], index) => `${index + 1}. ${tr(name)} [${tr(type === 'rule' ? 'DETERMINISTIC' : type.toUpperCase())}] — ${tr(description)}`),
       '',
-      `Decision logic: ${decisionLogic.textContent}`,
-      'What to measure:',
-      ...gates.map((gate) => `- ${gate}`),
+      `${tr('Decision logic')}: ${decisionLogic.textContent}`,
+      `${tr('What to measure')}:`,
+      ...gates.map((gate) => `- ${tr(gate)}`),
       '',
-      'Generated locally at https://mattian94.github.io/#lab'
+      `${tr('Generated locally at')} ${labUrl.toString()}`
     ].join('\n');
   };
 
   const updateRangeLabels = () => {
-    if (ambiguityValue) ambiguityValue.value = levelLabels[Number(ambiguityInput?.value || 2) - 1];
-    if (riskValue) riskValue.value = levelLabels[Number(riskInput?.value || 3) - 1];
+    const ambiguityLabel = tr(levelLabels[Number(ambiguityInput?.value || 2) - 1]);
+    const riskLabel = tr(levelLabels[Number(riskInput?.value || 3) - 1]);
+    if (ambiguityValue) ambiguityValue.value = ambiguityLabel;
+    if (riskValue) riskValue.value = riskLabel;
+    ambiguityInput?.setAttribute('aria-valuetext', ambiguityLabel);
+    riskInput?.setAttribute('aria-valuetext', riskLabel);
   };
 
   workflowForm?.addEventListener('submit', (event) => {
@@ -650,8 +753,21 @@
   const commandDialog = document.getElementById('commandDialog');
   const commandInput = document.getElementById('commandInput');
   const commandResults = document.getElementById('commandResults');
+  const commandStatus = document.getElementById('commandStatus');
+  const commandEmpty = document.getElementById('commandEmpty');
+  const commandClose = document.getElementById('commandClose');
+  const commandTrigger = document.getElementById('commandTrigger');
   let selectedCommand = 0;
   let visibleCommands = [];
+  let commandOrigin = commandTrigger;
+
+  if (commandInput && commandResults) {
+    commandInput.setAttribute('role', 'combobox');
+    commandInput.setAttribute('aria-autocomplete', 'list');
+    commandInput.setAttribute('aria-controls', commandResults.id);
+    commandInput.setAttribute('aria-haspopup', 'listbox');
+    commandInput.setAttribute('aria-expanded', 'false');
+  }
 
   const scrollTo = (selector) => {
     closeDialog(commandDialog);
@@ -659,12 +775,25 @@
   };
 
   const openCaseFromCommand = (caseId) => {
+    const trigger = commandOrigin?.isConnected ? commandOrigin : commandTrigger;
     closeDialog(commandDialog);
-    window.setTimeout(() => openCase(caseId, document.getElementById('commandTrigger')), 0);
+    window.setTimeout(() => openCase(caseId, trigger), 0);
+  };
+
+  const startTourFromCommand = () => {
+    const trigger = commandOrigin?.isConnected ? commandOrigin : commandTrigger;
+    closeDialog(commandDialog);
+    window.setTimeout(() => startTour(trigger), 0);
+  };
+
+  const inspectFromCommand = () => {
+    const trigger = commandOrigin?.isConnected ? commandOrigin : commandTrigger;
+    closeDialog(commandDialog);
+    window.setTimeout(() => openInspect(trigger), 0);
   };
 
   const commands = [
-    { icon: '90', title: 'Open the 90-second recruiter tour', detail: 'Four evidence-led chapters', keywords: 'recruiter fit short proof role', action: () => { closeDialog(commandDialog); startTour(document.getElementById('commandTrigger')); } },
+    { icon: '90', title: 'Open the 90-second recruiter tour', detail: 'Four evidence-led chapters', keywords: 'recruiter fit short proof role', action: startTourFromCommand },
     { icon: 'AI', title: 'Try the Workflow Lab', detail: 'A transparent local rules engine', keywords: 'workflow mapping simplify automation LLM AI rules', action: () => scrollTo('#lab') },
     { icon: '01', title: 'Human judgement and review', detail: 'Responsible-by-design product method', keywords: 'human review human-in-the-loop accountability safety uncertainty', action: () => scrollTo('#approach') },
     { icon: '02', title: 'Product discovery evidence', detail: 'First employee at an NLP spin-off; market-led pivot', keywords: 'product discovery market users Chisito pivot NLP', action: () => scrollTo('#experience') },
@@ -678,54 +807,123 @@
     { icon: 'UX', title: 'Self-service UX evidence', detail: 'Templates, structured import, guided editing and export', keywords: 'self-service product UX structured import editor hardening deployment', action: () => openCaseFromCommand('platform') },
     { icon: '☼', title: 'Toggle colour theme', detail: 'Light / dark', keywords: 'theme dark light appearance', action: () => { themeToggle?.click(); closeDialog(commandDialog); } },
     { icon: '↓', title: 'Print or save as PDF', detail: 'Recruiter-friendly print layout', keywords: 'download CV resume PDF print', action: () => { closeDialog(commandDialog); window.print(); } },
-    { icon: '</>', title: 'Inspect this system', detail: 'Architecture, privacy and local performance', keywords: 'inspect technical architecture performance privacy easter egg simplify', action: () => { closeDialog(commandDialog); openInspect(document.getElementById('commandTrigger')); } }
+    { icon: '</>', title: 'Inspect this system', detail: 'Architecture, privacy and local performance', keywords: 'inspect technical architecture performance privacy easter egg simplify', action: inspectFromCommand }
   ];
 
-  const normalise = (value) => value.toLocaleLowerCase('en').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const tokenise = (value) => (
+    String(value ?? '')
+      .toLocaleLowerCase(root.lang || 'en')
+      .normalize('NFKD')
+      .replace(/\p{M}/gu, '')
+      .match(/[\p{L}\p{N}]+/gu) || []
+  );
+
+  const indexCommands = () => commands.map((command, originalIndex) => ({
+    ...command,
+    originalIndex,
+    titleTokens: new Set([...tokenise(command.title), ...tokenise(tr(command.title))]),
+    searchTokens: new Set(tokenise(`${command.title} ${command.detail} ${command.keywords} ${tr(command.title)} ${tr(command.detail)} ${tr(command.keywords)}`))
+  }));
+
+  const setCommandPopupState = () => {
+    if (!commandInput) return;
+    const expanded = Boolean(commandDialog?.open && visibleCommands.length);
+    commandInput.setAttribute('aria-expanded', String(expanded));
+    if (!expanded) commandInput.removeAttribute('aria-activedescendant');
+  };
+
+  const syncCommandSelection = (scroll = false) => {
+    if (!commandResults || !commandInput) return;
+    const options = [...commandResults.querySelectorAll('[role="option"]:not([aria-disabled="true"])')];
+    if (!options.length) {
+      commandInput.removeAttribute('aria-activedescendant');
+      return;
+    }
+    selectedCommand = Math.min(Math.max(0, selectedCommand), options.length - 1);
+    options.forEach((option, index) => {
+      const active = index === selectedCommand;
+      option.classList.toggle('active', active);
+      option.setAttribute('aria-selected', String(active));
+    });
+    const activeOption = options[selectedCommand];
+    commandInput.setAttribute('aria-activedescendant', activeOption.id);
+    if (scroll) activeOption.scrollIntoView({ block: 'nearest' });
+  };
 
   const renderCommands = () => {
     if (!commandResults) return;
-    const query = normalise(commandInput?.value.trim() || '');
-    const tokens = query.split(/\s+/).filter(Boolean);
-    visibleCommands = commands
-      .map((command, originalIndex) => {
-        const haystack = normalise(`${command.title} ${command.detail} ${command.keywords}`);
-        const score = tokens.length === 0 ? 1 : tokens.reduce((total, token) => total + (haystack.includes(token) ? 2 : 0) + (normalise(command.title).includes(token) ? 2 : 0), 0);
-        return { ...command, score, originalIndex };
+    const tokens = [...new Set(tokenise(commandInput?.value.trim() || ''))];
+    visibleCommands = indexCommands()
+      .map((command) => {
+        const score = tokens.length === 0 ? 1 : tokens.reduce((total, token) => (
+          total + (command.searchTokens.has(token) ? 2 : 0) + (command.titleTokens.has(token) ? 2 : 0)
+        ), 0);
+        return { ...command, score };
       })
       .filter((command) => tokens.length === 0 || command.score > 0)
       .sort((a, b) => b.score - a.score || a.originalIndex - b.originalIndex);
 
-    selectedCommand = Math.min(selectedCommand, Math.max(0, visibleCommands.length - 1));
+    selectedCommand = visibleCommands.length ? Math.min(selectedCommand, visibleCommands.length - 1) : 0;
     commandResults.replaceChildren();
+    commandResults.hidden = visibleCommands.length === 0 && Boolean(commandEmpty);
+    if (commandEmpty) {
+      commandEmpty.hidden = visibleCommands.length > 0;
+      commandEmpty.textContent = interfaceCopy.commandNoResults();
+    }
+    if (commandStatus) commandStatus.textContent = interfaceCopy.commandResultCount(visibleCommands.length);
+
     if (!visibleCommands.length) {
-      commandResults.append(makeElement('p', 'command-empty', 'No exact match. Try “human review”, “product discovery”, “evaluation” or “inspect”.'));
+      if (!commandEmpty) {
+        const emptyOption = makeElement('div', 'command-empty', interfaceCopy.commandNoResults());
+        emptyOption.setAttribute('role', 'option');
+        emptyOption.setAttribute('aria-disabled', 'true');
+        commandResults.append(emptyOption);
+      }
+      setCommandPopupState();
+      syncCommandSelection();
       return;
     }
 
     visibleCommands.forEach((command, index) => {
-      const button = makeElement('button', `command-result${index === selectedCommand ? ' active' : ''}`);
+      const button = makeElement('button', 'command-result');
       button.type = 'button';
+      button.id = `command-option-${command.originalIndex}`;
+      button.tabIndex = -1;
       button.setAttribute('role', 'option');
-      button.setAttribute('aria-selected', String(index === selectedCommand));
+      button.setAttribute('aria-selected', 'false');
       const copy = document.createElement('span');
       copy.append(makeElement('strong', '', command.title), makeElement('small', '', command.detail));
       button.append(makeElement('span', 'command-icon', command.icon), copy, makeElement('span', '', '↵'));
-      button.addEventListener('mouseenter', () => { selectedCommand = index; renderCommands(); });
+      button.addEventListener('mouseenter', () => {
+        selectedCommand = index;
+        syncCommandSelection();
+      });
       button.addEventListener('click', command.action);
       commandResults.append(button);
     });
+    setCommandPopupState();
+    syncCommandSelection();
   };
 
   const openCommand = (query = '', trigger = document.activeElement) => {
+    if (!commandInput || !commandDialog) return;
+    commandOrigin = trigger instanceof HTMLElement ? trigger : commandTrigger;
     commandInput.value = query;
     selectedCommand = 0;
+    openDialog(commandDialog, commandOrigin);
     renderCommands();
-    openDialog(commandDialog, trigger);
     window.setTimeout(() => commandInput.focus(), 0);
   };
 
-  document.getElementById('commandTrigger')?.addEventListener('click', (event) => openCommand('', event.currentTarget));
+  commandTrigger?.addEventListener('click', (event) => openCommand('', event.currentTarget));
+  if (commandClose && !commandClose.hasAttribute('data-close-dialog')) {
+    commandClose.addEventListener('click', () => closeDialog(commandDialog));
+  }
+  commandDialog?.addEventListener('close', () => {
+    commandInput?.setAttribute('aria-expanded', 'false');
+    commandInput?.removeAttribute('aria-activedescendant');
+    commandOrigin = commandTrigger;
+  });
   commandInput?.addEventListener('input', () => { selectedCommand = 0; renderCommands(); });
   commandInput?.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
@@ -733,17 +931,25 @@
       closeDialog(commandDialog);
       return;
     }
-    if (event.key === 'ArrowDown') {
+    if (event.key === 'ArrowDown' && visibleCommands.length) {
       event.preventDefault();
       selectedCommand = Math.min(visibleCommands.length - 1, selectedCommand + 1);
-      renderCommands();
-      commandResults?.querySelector('.active')?.scrollIntoView({ block: 'nearest' });
+      syncCommandSelection(true);
     }
-    if (event.key === 'ArrowUp') {
+    if (event.key === 'ArrowUp' && visibleCommands.length) {
       event.preventDefault();
       selectedCommand = Math.max(0, selectedCommand - 1);
-      renderCommands();
-      commandResults?.querySelector('.active')?.scrollIntoView({ block: 'nearest' });
+      syncCommandSelection(true);
+    }
+    if (event.key === 'Home' && visibleCommands.length) {
+      event.preventDefault();
+      selectedCommand = 0;
+      syncCommandSelection(true);
+    }
+    if (event.key === 'End' && visibleCommands.length) {
+      event.preventDefault();
+      selectedCommand = visibleCommands.length - 1;
+      syncCommandSelection(true);
     }
     if (event.key === 'Enter' && visibleCommands[selectedCommand]) {
       event.preventDefault();
@@ -754,7 +960,7 @@
   document.addEventListener('keydown', (event) => {
     if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
       event.preventDefault();
-      commandDialog?.open ? closeDialog(commandDialog) : openCommand('', document.getElementById('commandTrigger'));
+      commandDialog?.open ? closeDialog(commandDialog) : openCommand('', commandTrigger);
     }
   });
 
@@ -765,9 +971,9 @@
   // Runtime inspection easter egg.
   const inspectDialog = document.getElementById('inspectDialog');
   const formatBytes = (bytes) => {
-    if (!Number.isFinite(bytes) || bytes <= 0) return 'cached';
+    if (!Number.isFinite(bytes) || bytes <= 0) return tr('cached');
     if (bytes < 1024) return `${bytes} B`;
-    return `${(bytes / 1024).toFixed(bytes < 10240 ? 1 : 0)} KB`;
+    return `${new Intl.NumberFormat(root.lang || 'en', { maximumFractionDigits: bytes < 10240 ? 1 : 0 }).format(bytes / 1024)} KB`;
   };
 
   function openInspect(trigger) {
@@ -779,7 +985,7 @@
     const navigation = performance.getEntriesByType?.('navigation')?.[0];
     document.getElementById('inspectResources').textContent = String(localResources.length + 1);
     document.getElementById('inspectTransfer').textContent = formatBytes(transferred);
-    document.getElementById('inspectLoad').textContent = navigation?.domContentLoadedEventEnd ? `${Math.round(navigation.domContentLoadedEventEnd)} ms` : 'ready';
+    document.getElementById('inspectLoad').textContent = navigation?.domContentLoadedEventEnd ? `${Math.round(navigation.domContentLoadedEventEnd)} ms` : tr('ready');
     openDialog(inspectDialog, trigger);
   }
 
@@ -787,9 +993,20 @@
 
   // Contact utilities.
   const profileSummary = 'Mattia Necchio designs useful AI products for complex workflows. He maps how work happens, prototypes the full path, and defines where data, rules, AI and human review belong. His background spans corporate reputation, NLP products, digital strategy and AI-assisted knowledge systems.';
-  document.getElementById('copyProfile')?.addEventListener('click', () => copyText(profileSummary, 'Short profile copied'));
+  document.getElementById('copyProfile')?.addEventListener('click', () => copyText(tr(profileSummary), 'Short profile copied'));
   document.getElementById('printProfile')?.addEventListener('click', () => window.print());
   document.getElementById('currentYear').textContent = String(new Date().getFullYear());
+
+  window.addEventListener('portfolio:languagechange', () => {
+    applyTheme(root.getAttribute('data-theme'), false);
+    if (menuToggle) setMenu(menuToggle.getAttribute('aria-expanded') === 'true');
+    updateRangeLabels();
+    buildWorkflow();
+    renderTour();
+    renderCommands();
+    if (caseDialog?.open) renderCase(activeCase);
+    updateCaseCounter(true);
+  });
 
   // Deep links and optional inspection/recruiter views.
   handleCaseHash();
@@ -799,8 +1016,8 @@
 
   // Offline support is optional and fails silently when unsupported.
   if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
-    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+    window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
   }
 
-  console.info('%cMN / SYSTEM NOTE', 'background:#8e88ff;color:#101116;padding:4px 8px;border-radius:4px;font-weight:bold', '\nA useful AI workflow begins with a boring question: what decision must become easier?\nPress Ctrl/Cmd + K and type “inspect”.');
+  console.info('%cMN / SYSTEM NOTE', 'background:#8e88ff;color:#101116;padding:4px 8px;border-radius:4px;font-weight:bold', `\n${tr('A useful AI workflow begins with a boring question: what decision must become easier?')}\n${tr('Press Ctrl/Cmd + K and type “inspect”.')}`);
 })();

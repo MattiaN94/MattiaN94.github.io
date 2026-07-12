@@ -5,7 +5,9 @@
   "description": "Mattia Necchio's public portfolio for AI product design, workflow simplification and knowledge systems.",
   "type": "module",
   "scripts": {
-    "validate": "node scripts/validate.mjs",
+    "generate:it": "node scripts/generate-localized-page.mjs",
+    "check:it": "node scripts/generate-localized-page.mjs --check",
+    "validate": "npm run check:it && node scripts/validate.mjs",
     "test": "npm run validate"
   },
   "engines": {

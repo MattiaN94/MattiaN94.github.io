@@ -1,0 +1,51 @@
+{
+  "name": "Mattia Necchio — Prodotti AI e workflow",
+  "short_name": "Mattia Necchio",
+  "description": "Portfolio su prodotti AI, semplificazione dei workflow e sistemi di conoscenza.",
+  "id": "/",
+  "start_url": "/it/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f3f1ea",
+  "theme_color": "#111318",
+  "lang": "it",
+  "dir": "ltr",
+  "categories": [
+    "business",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "/assets/icon-192.png?v=5",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icon-512.png?v=5",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Sistemi selezionati",
+      "short_name": "Sistemi",
+      "description": "Apri i pattern di prodotto, AI e automazione selezionati.",
+      "url": "/it/#work"
+    },
+    {
+      "name": "Workflow Lab",
+      "short_name": "Workflow Lab",
+      "description": "Prova lo strumento locale per progettare un workflow AI.",
+      "url": "/it/#lab"
+    },
+    {
+      "name": "Contatta Mattia",
+      "short_name": "Contatto",
+      "description": "Apri la sezione contatti del portfolio.",
+      "url": "/it/#contact"
+    }
+  ]
+}
