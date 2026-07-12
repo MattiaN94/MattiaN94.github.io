@@ -253,11 +253,13 @@ svg {
 }
 
 .brand-copy small {
+  max-width: 390px;
   margin-top: 5px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 8px;
   font-weight: 700;
-  letter-spacing: 0.055em;
+  letter-spacing: 0.035em;
+  line-height: 1.2;
   text-transform: uppercase;
 }
 
@@ -465,6 +467,17 @@ kbd {
   color: var(--ink);
 }
 
+.button-simple {
+  border-color: rgba(var(--accent-rgb), 0.38);
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
+
+.button-simple:hover {
+  border-color: var(--accent-strong);
+  box-shadow: 0 10px 26px rgba(var(--accent-rgb), 0.14);
+}
+
 .button-outline-light {
   border-color: rgba(255, 255, 255, 0.24);
   background: transparent;
@@ -526,6 +539,7 @@ kbd {
 .hero h1 {
   max-width: 820px;
   margin: 0;
+  color: var(--muted);
   font-family: Arial, Helvetica, sans-serif;
   font-size: clamp(56px, 6.6vw, 102px);
   font-weight: 900;
@@ -534,9 +548,20 @@ kbd {
 }
 
 .hero h1 em {
-  color: var(--muted);
+  display: block;
+  color: var(--ink);
   font-style: normal;
+  font-weight: 900;
+}
+
+.hero h1 > span {
+  display: block;
+  max-width: 740px;
+  margin-top: 0.12em;
+  font-size: 0.68em;
   font-weight: 650;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
 }
 
 .hero-lead {
@@ -2600,6 +2625,110 @@ input[type="range"] {
   gap: 8px;
 }
 
+.simple-fade {
+  position: fixed;
+  z-index: 450;
+  inset: 0;
+  background: var(--bg);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+
+.simple-fade.is-active {
+  opacity: 0.92;
+}
+
+.simple-dialog {
+  width: min(860px, calc(100% - 28px));
+}
+
+.simple-lead {
+  max-width: 680px;
+  margin: 30px 0 0;
+  color: var(--muted);
+  font-size: clamp(18px, 2vw, 22px);
+  line-height: 1.45;
+}
+
+.simple-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: simple-step;
+}
+
+.simple-steps li {
+  min-height: 178px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface-2);
+  counter-increment: simple-step;
+}
+
+.simple-steps li::before {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  margin-bottom: 22px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  content: counter(simple-step);
+  font-family: Consolas, monospace;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.simple-steps strong {
+  display: block;
+  font-size: 17px;
+}
+
+.simple-steps p {
+  margin: 9px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.simple-outcome {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 24px;
+  align-items: start;
+  margin-top: 12px;
+  padding: 22px;
+  border-radius: 18px;
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.simple-outcome strong {
+  color: var(--accent-on-dark);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.simple-outcome p {
+  margin: 0;
+  color: currentColor;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.simple-summary {
+  margin: 22px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
 .button:disabled {
   cursor: not-allowed;
   opacity: 0.35;
@@ -2932,6 +3061,7 @@ input[type="range"] {
   .hero { gap: 28px; padding-top: 116px; padding-bottom: 50px; }
   .status-line { margin-bottom: 18px; font-size: 10px; }
   .hero h1 { font-size: clamp(45px, 13.5vw, 64px); line-height: .94; }
+  .hero h1 > span { margin-top: .18em; font-size: .62em; line-height: 1.03; }
   .hero-lead { margin-top: 20px; font-size: 16px; line-height: 1.4; }
   .hero-actions { display: grid; }
   .hero-actions .button { width: 100%; }
@@ -3059,6 +3189,9 @@ input[type="range"] {
   .tour-footer > div .button { flex: 1; }
   .tour-slides { min-height: 300px; }
   .tour-slide p { font-size: 15px; }
+  .simple-steps { grid-template-columns: 1fr; }
+  .simple-steps li { min-height: 0; }
+  .simple-outcome { grid-template-columns: 1fr; gap: 10px; }
   .case-summary,
   .case-detail-grid { grid-template-columns: 1fr; }
   .case-summary { border-right: 1px solid var(--line); }
@@ -3140,6 +3273,7 @@ input[type="range"] {
   .contact-actions,
   .footer-links,
   .toast,
+  .simple-fade,
   dialog { display: none !important; }
   .shell { width: 100%; }
   .hero { display: block; min-height: auto; padding: 0 0 18mm; }

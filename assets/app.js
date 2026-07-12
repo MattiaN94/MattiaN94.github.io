@@ -564,6 +564,35 @@
     copyText(url.toString(), 'Recruiter link copied');
   });
 
+  // Plain-language mode: a short transition into a deliberately simple explanation.
+  const simpleDialog = document.getElementById('simpleDialog');
+  const simpleFade = document.getElementById('simpleFade');
+  let simpleFadeTimer;
+
+  const openSimple = (trigger) => {
+    if (!simpleDialog || simpleDialog.open) return;
+    window.clearTimeout(simpleFadeTimer);
+    if (prefersReducedMotion.matches || !simpleFade) {
+      openDialog(simpleDialog, trigger);
+      return;
+    }
+    simpleFade.classList.add('is-active');
+    simpleFadeTimer = window.setTimeout(() => {
+      openDialog(simpleDialog, trigger);
+      window.requestAnimationFrame(() => simpleFade.classList.remove('is-active'));
+    }, 180);
+  };
+
+  document.getElementById('simpleTrigger')?.addEventListener('click', (event) => openSimple(event.currentTarget));
+  document.querySelectorAll('[data-open-simple]').forEach((button) => button.addEventListener('click', () => openSimple(button)));
+  document.querySelectorAll('[data-simple-go]').forEach((button) => button.addEventListener('click', () => {
+    const target = button.dataset.simpleGo;
+    closeDialog(simpleDialog);
+    window.setTimeout(() => {
+      document.querySelector(target)?.scrollIntoView({ behavior: prefersReducedMotion.matches ? 'auto' : 'smooth' });
+    }, 0);
+  }));
+
   // Workflow Lab: transparent rule engine, no network request.
   const workflowForm = document.getElementById('workflowForm');
   const ambiguityInput = document.getElementById('ambiguity');
@@ -707,7 +736,7 @@
     const labUrl = new URL(activeLanguage() === 'it' ? '/it/' : '/', window.location.origin);
     labUrl.hash = 'lab';
     lastBlueprintText = [
-      `${tr('Workflow blueprint')}: ${tr(state.scenario)}`,
+      `${tr('My workflow approach')}: ${tr(state.scenario)}`,
       `${tr('Mode')}: ${blueprintMode.textContent}`,
       `${tr('Before')}: ${tr(plan.before)}`,
       '',
@@ -738,14 +767,14 @@
       [{ transform: 'translateY(4px)', opacity: 0.72 }, { transform: 'none', opacity: 1 }],
       { duration: prefersReducedMotion.matches ? 1 : 320, easing: 'ease-out' }
     );
-    showToast('Blueprint rebuilt locally');
+    showToast('Approach rebuilt locally');
   });
   workflowForm?.addEventListener('input', updateRangeLabels);
   document.getElementById('resetWorkflow')?.addEventListener('click', () => window.setTimeout(() => {
     updateRangeLabels();
     buildWorkflow();
   }));
-  document.getElementById('copyBlueprint')?.addEventListener('click', () => copyText(lastBlueprintText, 'Blueprint copied'));
+  document.getElementById('copyBlueprint')?.addEventListener('click', () => copyText(lastBlueprintText, 'Approach copied'));
   updateRangeLabels();
   buildWorkflow();
 
@@ -786,6 +815,12 @@
     window.setTimeout(() => startTour(trigger), 0);
   };
 
+  const openSimpleFromCommand = () => {
+    const trigger = commandOrigin?.isConnected ? commandOrigin : commandTrigger;
+    closeDialog(commandDialog);
+    window.setTimeout(() => openSimple(trigger), 0);
+  };
+
   const inspectFromCommand = () => {
     const trigger = commandOrigin?.isConnected ? commandOrigin : commandTrigger;
     closeDialog(commandDialog);
@@ -794,6 +829,7 @@
 
   const commands = [
     { icon: '90', title: 'Open the 90-second recruiter tour', detail: 'Four evidence-led chapters', keywords: 'recruiter fit short proof role', action: startTourFromCommand },
+    { icon: 'Aa', title: 'Explain the site simply', detail: 'A plain-language guide with no technical jargon', keywords: 'simple explain non technical child plain language accessibility', action: openSimpleFromCommand },
     { icon: 'AI', title: 'Try the Workflow Lab', detail: 'A transparent local rules engine', keywords: 'workflow mapping simplify automation LLM AI rules', action: () => scrollTo('#lab') },
     { icon: '01', title: 'Human judgement and review', detail: 'Responsible-by-design product method', keywords: 'human review human-in-the-loop accountability safety uncertainty', action: () => scrollTo('#approach') },
     { icon: '02', title: 'Product discovery evidence', detail: 'First employee at an NLP spin-off; market-led pivot', keywords: 'product discovery market users Chisito pivot NLP', action: () => scrollTo('#experience') },
