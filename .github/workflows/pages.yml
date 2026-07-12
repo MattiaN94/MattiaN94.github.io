@@ -43,11 +43,15 @@ jobs:
       - name: Stage public site
         shell: bash
         run: |
-          mkdir -p _site/assets _site/.well-known
-          cp index.html 404.html sw.js site.webmanifest robots.txt sitemap.xml humans.txt llms.txt llms-full.txt hire-me.txt _site/
+          mkdir -p _site/assets _site/.well-known _site/it
+          cp index.html 404.html sw.js site.webmanifest site-it.webmanifest robots.txt sitemap.xml humans.txt llms.txt llms-full.txt hire-me.txt _site/
+          cp it/index.html _site/it/index.html
           cp -R assets/. _site/assets/
           cp .nojekyll _site/.nojekyll
           cp .well-known/security.txt _site/.well-known/security.txt
+          test -s _site/it/index.html
+          grep -q '<html lang="it"' _site/it/index.html
+          grep -q 'href="https://mattian94.github.io/it/"' _site/it/index.html
 
       - name: Archive GitHub Pages artifact
         shell: bash

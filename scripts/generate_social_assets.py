@@ -4,7 +4,7 @@ This script is for reproducibility only; the website does not require Python.
 """
 
 from pathlib import Path
-from PIL import Image, ImageDraw, ImageFilter, ImageFont
+from PIL import Image, ImageDraw, ImageFont
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -58,12 +58,6 @@ def draw_icon(size: int, filename: str) -> None:
 def draw_social_card() -> None:
     width, height = 1200, 630
     image = Image.new("RGB", (width, height), "#f3f1ea")
-
-    glow = Image.new("RGBA", image.size, (0, 0, 0, 0))
-    glow_draw = ImageDraw.Draw(glow)
-    glow_draw.ellipse((-190, -240, 390, 340), fill=(91, 82, 214, 92))
-    glow_draw.ellipse((510, -300, 1030, 220), fill=(49, 168, 196, 55))
-    image = Image.alpha_composite(image.convert("RGBA"), glow.filter(ImageFilter.GaussianBlur(48)))
     draw = ImageDraw.Draw(image)
 
     for x in range(0, width, 42):

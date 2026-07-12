@@ -1,19 +1,23 @@
-const CACHE_NAME = 'mn-portfolio-v4';
+const CACHE_NAME = 'mn-portfolio-v5';
 const CORE_ASSETS = [
-  './',
-  'index.html',
-  '404.html',
-  'assets/styles.css?v=4',
-  'assets/app.js?v=4',
-  'assets/favicon.svg?v=4',
-  'assets/apple-touch-icon.png?v=4',
-  'assets/icon-192.png?v=4',
-  'assets/icon-512.png?v=4',
-  'site.webmanifest?v=4',
-  'humans.txt',
-  'llms.txt',
-  'llms-full.txt',
-  'hire-me.txt'
+  '/',
+  '/index.html',
+  '/it/',
+  '/it/index.html',
+  '/404.html',
+  '/assets/styles.css?v=5',
+  '/assets/i18n.js?v=5',
+  '/assets/app.js?v=5',
+  '/assets/favicon.svg?v=5',
+  '/assets/apple-touch-icon.png?v=5',
+  '/assets/icon-192.png?v=5',
+  '/assets/icon-512.png?v=5',
+  '/site.webmanifest?v=5',
+  '/site-it.webmanifest?v=5',
+  '/humans.txt',
+  '/llms.txt',
+  '/llms-full.txt',
+  '/hire-me.txt'
 ];
 
 self.addEventListener('install', (event) => {
@@ -39,26 +43,21 @@ self.addEventListener('fetch', (event) => {
   if (url.origin !== self.location.origin) return;
 
   if (request.mode === 'navigate') {
+    const fallback = url.pathname.startsWith('/it/') ? '/it/index.html' : '/index.html';
     event.respondWith(
       fetch(request)
         .then((response) => response)
-        .catch(() => caches.match('index.html'))
+        .catch(() => caches.match(fallback))
     );
     return;
   }
 
-  event.respondWith(
-    caches.match(request).then((cached) => {
-      const network = fetch(request)
-        .then((response) => {
-          if (response.ok) {
-            const copy = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
-          }
-          return response;
-        })
-        .catch(() => cached);
-      return cached || network;
-    })
-  );
+  const network = fetch(request);
+  const refresh = network.then((response) => {
+    if (!response.ok) return undefined;
+    const copy = response.clone();
+    return caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+  });
+  event.waitUntil(refresh.catch(() => undefined));
+  event.respondWith(caches.match(request).then((cached) => cached || network));
 });

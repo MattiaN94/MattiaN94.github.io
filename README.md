@@ -8,7 +8,7 @@ knowledge work into useful AI products. It shows the reasoning between domain
 discovery and implementation: workflow mapping, hybrid deterministic/AI
 architecture, evaluation, human review and explicit production handoffs.
 
-**Live site:** [mattian94.github.io](https://mattian94.github.io/)
+**Live site:** [English](https://mattian94.github.io/) · [Italiano](https://mattian94.github.io/it/)
 
 ![Mattia Necchio — AI Product and Workflow Designer](assets/og-card.png)
 
@@ -18,8 +18,10 @@ architecture, evaluation, human review and explicit production handoffs.
   status boundaries.
 - An on-device Workflow Lab that explains where rules, AI and human judgement
   belong, plus which outcome signals are useful to measure.
+- A least-complex-first solution ladder from simplification to productisation.
 - A focused 90-second recruiter tour.
 - Keyboard-first evidence search with Ctrl+K or Command+K.
+- Complete English and Italian interfaces with a persistent language switch.
 - Light and dark themes, reduced-motion support, compact mobile disclosure and
   print-friendly content.
 - A resilient 404 recovery workflow with a small easter egg.
@@ -34,12 +36,13 @@ browser and do not send or store visitor input.
 
 The site intentionally uses standards-based HTML, CSS and JavaScript without a
 front-end framework or runtime dependencies. GitHub Pages serves the static
-output directly.
+output directly; the committed Italian page is generated deterministically from
+the English source and the shared translation catalogue.
 
 This keeps the implementation:
 
 - inspectable by recruiters and engineers;
-- usable without a build step;
+- usable without a client-side rendering step;
 - fast on constrained devices;
 - resilient when JavaScript is unavailable;
 - straightforward to audit and deploy.
@@ -48,22 +51,27 @@ This keeps the implementation:
 
 ~~~
 .
-├── index.html                 # Portfolio and interactive product demos
+├── index.html                 # English portfolio and interactive product demos
+├── it/index.html              # Generated, prerendered Italian interface
 ├── 404.html                   # Accessible recovery experience
 ├── sw.js                      # Small offline cache for core static assets
 ├── assets/
 │   ├── app.js                 # Progressive interactions
+│   ├── i18n.js                # English/Italian interface catalogue and switching
 │   ├── styles.css             # Responsive visual system
 │   ├── favicon.svg
 │   ├── icon-192.png
 │   ├── icon-512.png
 │   └── og-card.png
-├── scripts/validate.mjs       # Dependency-free quality gate
+├── scripts/
+│   ├── generate-localized-page.mjs # Deterministic Italian-page renderer
+│   └── validate.mjs           # Dependency-free quality gate
 ├── .github/workflows/
 │   ├── quality.yml            # Pull-request and main-branch validation
 │   └── pages.yml              # Validated GitHub Pages deployment
 ├── .well-known/security.txt
 ├── site.webmanifest
+├── site-it.webmanifest
 ├── robots.txt
 ├── sitemap.xml
 ├── humans.txt
