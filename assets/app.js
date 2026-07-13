@@ -842,7 +842,6 @@
     { icon: '09', title: 'AI operations evidence', detail: 'Preview, approval, test, release and rollback', keywords: 'AI operations control plane queues workers Git GitHub release rollback security', action: () => openCaseFromCommand('control') },
     { icon: 'UX', title: 'Self-service UX evidence', detail: 'Templates, structured import, guided editing and export', keywords: 'self-service product UX structured import editor hardening deployment', action: () => openCaseFromCommand('platform') },
     { icon: '☼', title: 'Toggle colour theme', detail: 'Light / dark', keywords: 'theme dark light appearance', action: () => { themeToggle?.click(); closeDialog(commandDialog); } },
-    { icon: '↓', title: 'Print or save as PDF', detail: 'Recruiter-friendly print layout', keywords: 'download CV resume PDF print', action: () => { closeDialog(commandDialog); window.print(); } },
     { icon: '</>', title: 'Inspect this system', detail: 'Architecture, privacy and local performance', keywords: 'inspect technical architecture performance privacy easter egg simplify', action: inspectFromCommand }
   ];
 
@@ -1030,7 +1029,6 @@
   // Contact utilities.
   const profileSummary = 'Mattia Necchio designs useful AI products for complex workflows. He maps how work happens, prototypes the full path, and defines where data, rules, AI and human review belong. His background spans corporate reputation, NLP products, digital strategy and AI-assisted knowledge systems.';
   document.getElementById('copyProfile')?.addEventListener('click', () => copyText(tr(profileSummary), 'Short profile copied'));
-  document.getElementById('printProfile')?.addEventListener('click', () => window.print());
   document.getElementById('currentYear').textContent = String(new Date().getFullYear());
 
   window.addEventListener('portfolio:languagechange', () => {

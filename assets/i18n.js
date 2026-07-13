@@ -26,9 +26,8 @@
     'Start 90-sec tour': 'Avvia il tour di 90 secondi',
     '90-sec tour': 'Tour 90 sec',
     'Communication × product × AI workflows': 'Comunicazione × prodotto × workflow AI',
-    'Corporate Reputation & Communication Strategy | Building AI Systems for Knowledge Work': 'Reputazione corporate e strategia di comunicazione | Sistemi AI per il knowledge work',
-    'Useful AI products.': 'Prodotti AI utili.',
-    'I build them from complex work.': 'Li costruisco partendo da processi complessi.',
+    'Corporate Reputation & Communication Strategy | Building AI Systems for Knowledge Work': 'Corporate Reputation & Communication Strategy | Building AI Systems for Knowledge Work',
+    'AI products.': 'Prodotti AI.',
     'Explain it simply': 'Spiegamelo semplice',
     'I turn complex work into': 'Trasformo processi complessi in',
     'useful AI products.': 'prodotti AI utili.',
@@ -294,10 +293,7 @@
     'Leadership & public work': 'Leadership e attività pubblica',
     'FERPI, teaching and professional events': 'FERPI, didattica ed eventi professionali',
     'Former youth lead and UniFERPI coordinator; speaker and guest lecturer on sentiment analysis, social listening and digital communication work.': 'Già responsabile giovani e coordinatore UniFERPI; speaker e docente ospite su sentiment analysis, social listening e comunicazione digitale.',
-    'Working on a complex AI workflow?': 'Stai lavorando a un workflow AI complesso?',
-    'I am interested in product roles where domain understanding, UX and technical systems meet.': 'Mi interessano ruoli di prodotto in cui conoscenza del dominio, UX e sistemi tecnici si incontrano.',
     'Message on LinkedIn': 'Scrivimi su LinkedIn',
-    'Print / save as PDF': 'Stampa / salva come PDF',
     'Copy short profile': 'Copia il profilo breve',
     'AI product · workflow design · knowledge systems': 'Prodotti AI · workflow design · sistemi di conoscenza',
     'Back to top ↑': 'Torna all’inizio ↑',
@@ -310,7 +306,7 @@
     'Next case': 'Caso successivo',
     'The short version.': 'La versione breve.',
     '90-second business overview': 'Panoramica business in 90 secondi',
-    'What I do — and why it matters.': 'Cosa faccio — e perché conta.',
+    'What I do and why it matters.': 'Cosa faccio e perché conta.',
     'Close recruiter tour': 'Chiudi il tour',
     'Tour progress': 'Avanzamento del tour',
     'Start with the workflow.': 'Parti dal workflow.',
@@ -650,8 +646,6 @@
     'Templates, structured import, guided editing and export': 'Template, import strutturato, modifica guidata ed export',
     'Toggle colour theme': 'Cambia tema',
     'Light / dark': 'Chiaro / scuro',
-    'Print or save as PDF': 'Stampa o salva come PDF',
-    'Recruiter-friendly print layout': 'Layout di stampa pensato per i recruiter',
     'Architecture, privacy and local performance': 'Architettura, privacy e performance locali',
     'Mattia Necchio designs useful AI products for complex workflows. He maps how work happens, prototypes the full path, and defines where data, rules, AI and human review belong. His background spans corporate reputation, NLP products, digital strategy and AI-assisted knowledge systems.': 'Mattia Necchio progetta prodotti AI utili per workflow complessi. Mappa il lavoro reale, prototipa l’intero percorso e definisce dove usare dati, regole, AI e revisione umana. Il suo percorso unisce reputazione corporate, prodotti NLP, strategia digitale e sistemi di conoscenza assistiti dall’AI.',
     'research': 'ricerca',
@@ -675,7 +669,6 @@
     'AI operations control plane queues workers Git GitHub release rollback security': 'operazioni AI control plane code worker Git GitHub release rollback sicurezza',
     'self-service product UX structured import editor hardening deployment': 'prodotto self-service UX import strutturato editor hardening deploy',
     'theme dark light appearance': 'tema scuro chiaro aspetto',
-    'download CV resume PDF print': 'scarica CV curriculum PDF stampa',
     'inspect technical architecture performance privacy easter egg simplify': 'ispeziona architettura tecnica performance privacy easter egg semplificare',
 
     'Copied to clipboard': 'Copiato negli appunti',
@@ -828,7 +821,7 @@
       if (canonical) canonical.href = localizedUrl;
     }
     const manifest = document.querySelector('link[rel="manifest"]');
-    if (manifest) manifest.href = italian ? '/site-it.webmanifest?v=6' : '/site.webmanifest?v=6';
+    if (manifest) manifest.href = italian ? '/site-it.webmanifest?v=7' : '/site.webmanifest?v=7';
   };
 
   const updateStructuredData = () => {
