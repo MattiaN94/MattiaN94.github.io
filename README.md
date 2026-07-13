@@ -1,16 +1,16 @@
-# Mattia Necchio — AI Product & Workflow Designer
+# Mattia Necchio — Corporate Reputation & Communication Strategy | Building AI Systems for Knowledge Work
 
 [![Quality](https://github.com/MattiaN94/MattiaN94.github.io/actions/workflows/quality.yml/badge.svg)](https://github.com/MattiaN94/MattiaN94.github.io/actions/workflows/quality.yml)
 [![Deploy to GitHub Pages](https://github.com/MattiaN94/MattiaN94.github.io/actions/workflows/pages.yml/badge.svg)](https://github.com/MattiaN94/MattiaN94.github.io/actions/workflows/pages.yml)
 
 A fast, accessible and privacy-conscious portfolio about turning complex
-knowledge work into useful AI products. It shows the reasoning between domain
+knowledge work into AI products. It shows the reasoning between domain
 discovery and implementation: workflow mapping, hybrid deterministic/AI
 architecture, evaluation, human review and explicit production handoffs.
 
 **Live site:** [English](https://mattian94.github.io/) · [Italiano](https://mattian94.github.io/it/)
 
-![Mattia Necchio — AI Product and Workflow Designer](assets/og-card.png)
+![Mattia Necchio — Corporate Reputation & Communication Strategy | Building AI Systems for Knowledge Work](assets/og-card.png)
 
 ## What is inside
 
@@ -19,11 +19,11 @@ architecture, evaluation, human review and explicit production handoffs.
 - An on-device Workflow Lab that explains where rules, AI and human judgement
   belong, plus which outcome signals are useful to measure.
 - A least-complex-first solution ladder from simplification to productisation.
-- A focused 90-second recruiter tour.
+- A focused, business-oriented 90-second recruiter tour.
+- A plain-language explanation for visitors without a technical background.
 - Keyboard-first evidence search with Ctrl+K or Command+K.
 - Complete English and Italian interfaces with a persistent language switch.
-- Light and dark themes, reduced-motion support, compact mobile disclosure and
-  print-friendly content.
+- Light and dark themes, reduced-motion support and compact mobile disclosure.
 - A resilient 404 recovery workflow with a small easter egg.
 - Machine-readable context through robots.txt, sitemap.xml, llms.txt,
   llms-full.txt, humans.txt and structured data.

@@ -128,7 +128,7 @@ async function renderItalianPage() {
     .replace(/(<link\b[^>]*\brel="canonical"[^>]*\bhref=")[^"]*(")/i, '$1https://mattian94.github.io/it/$2')
     .replace(/(<link\b[^>]*\bhreflang="it"[^>]*\bhref=")[^"]*(")/i, '$1https://mattian94.github.io/it/$2')
     .replace(/\b(href|src)="assets\//gi, '$1="/assets/')
-    .replace(/href="site\.webmanifest\?v=6"/i, 'href="/site-it.webmanifest?v=6"')
+    .replace(/href="site\.webmanifest\?v=7"/i, 'href="/site-it.webmanifest?v=7"')
     .replace(/href="(humans\.txt|llms\.txt|llms-full\.txt)"/gi, 'href="/$1"');
 
   const protectedBlocks = [];

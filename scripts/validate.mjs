@@ -873,10 +873,10 @@ await runSection("Bilingual interface and product UX", async () => {
 
   check(html.includes('id="languageToggle"') && html.includes('id="mobileLanguageToggle"'), "Home must expose desktop and mobile language controls");
   check(errorHtml.includes('id="languageToggle"'), "404 must expose a language control");
-  check(html.includes('assets/i18n.js?v=6') && italianHtml.includes('/assets/i18n.js?v=6') && errorHtml.includes('/assets/i18n.js?v=6'), "Every interface must load the v6 language runtime");
+  check(html.includes('assets/i18n.js?v=7') && italianHtml.includes('/assets/i18n.js?v=7') && errorHtml.includes('/assets/i18n.js?v=7'), "Every interface must load the v7 language runtime");
   check(i18n.includes("const STORAGE_KEY = 'mn-language'"), "Language preference must persist locally");
   check(i18n.includes("document.documentElement.lang = language"), "Language runtime must update the document language");
-  check(i18n.includes("site-it.webmanifest?v=6"), "Italian UI must select the Italian manifest");
+  check(i18n.includes("site-it.webmanifest?v=7"), "Italian UI must select the Italian manifest");
   check(i18n.includes("https://mattian94.github.io/it/"), "Italian runtime metadata must use the published /it/ URL");
   check(i18n.includes("const pathLanguage") && i18n.includes("url.pathname = nextLanguage === 'it' ? '/it/' : '/'"), "Language runtime must treat /it/ as the authoritative locale route");
   check(i18n.includes("const italianErrorRoute") && i18n.includes("url.pathname.replace(/^\\/it"), "English toggle must escape Italian 404 paths");
@@ -978,8 +978,8 @@ await runSection("Bilingual interface and product UX", async () => {
   check(app.includes("aria-activedescendant") && app.includes("commandResultCount"), "Evidence search keyboard and announcement logic is incomplete");
   check(app.includes("Skills demonstrated") && !app.includes("My contribution"), "Case summaries must use the generic Skills demonstrated label");
 
-  check(/^const CACHE_NAME = 'mn-portfolio-v6';/m.test(serviceWorker), "Service worker cache must use v6");
-  for (const asset of ["/it/index.html", "/assets/i18n.js?v=6", "/site-it.webmanifest?v=6"]) {
+  check(/^const CACHE_NAME = 'mn-portfolio-v7';/m.test(serviceWorker), "Service worker cache must use v7");
+  for (const asset of ["/it/index.html", "/assets/i18n.js?v=7", "/site-it.webmanifest?v=7"]) {
     check(serviceWorker.includes("'" + asset + "'"), "Service worker must precache " + asset);
   }
   check(serviceWorker.includes("url.pathname.startsWith('/it/')") && serviceWorker.includes("'/it/index.html'"), "Offline navigation must use the Italian fallback for /it/ paths");
